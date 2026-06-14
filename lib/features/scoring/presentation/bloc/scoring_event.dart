@@ -55,6 +55,41 @@ class ResumeScoringRequested extends ScoringEvent {
   List<Object> get props => [matchId];
 }
 
+class UndoLastBallRequested extends ScoringEvent {
+  final int matchId;
+
+  const UndoLastBallRequested(this.matchId);
+
+  @override
+  List<Object> get props => [matchId];
+}
+
+class NewBatsmanSubmitted extends ScoringEvent {
+  final int matchId;
+  final String playerName;
+
+  const NewBatsmanSubmitted({
+    required this.matchId,
+    required this.playerName,
+  });
+
+  @override
+  List<Object> get props => [matchId, playerName];
+}
+
+class NewBowlerSubmitted extends ScoringEvent {
+  final int matchId;
+  final String playerName;
+
+  const NewBowlerSubmitted({
+    required this.matchId,
+    required this.playerName,
+  });
+
+  @override
+  List<Object> get props => [matchId, playerName];
+}
+
 class BallSubmitted extends ScoringEvent {
   final int matchId;
   final int runs;

@@ -20,7 +20,7 @@ class ScoreUpdateResponse {
 class Data {
   final int totalRuns;
   final int totalWickets;
-  final double overs;
+  final String overs;
   final String currentRunRate;
 
   Data({
@@ -33,8 +33,7 @@ class Data {
   factory Data.fromJson(Map<String, dynamic> json) => Data(
         totalRuns: json["total_runs"] as int,
         totalWickets: json["total_wickets"] as int,
-        overs: (json["overs"] as num?)?.toDouble() ?? 0.0,
-        currentRunRate: json["current_run_rate"] as String,
+        overs: json["overs"]?.toString() ?? '0.0',
+        currentRunRate: json["current_run_rate"]?.toString() ?? '',
       );
 }
-

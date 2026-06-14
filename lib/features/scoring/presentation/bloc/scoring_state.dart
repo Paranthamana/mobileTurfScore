@@ -51,8 +51,10 @@ class MatchCreatedSuccess extends ScoringState {
 
 class ScoringError extends ScoringState {
   final String message;
-  const ScoringError(this.message);
+  final Map<String, dynamic>? matchData;
+
+  const ScoringError(this.message, {this.matchData});
 
   @override
-  List<Object> get props => [message];
+  List<Object> get props => [message, matchData ?? const <String, dynamic>{}];
 }

@@ -21,6 +21,24 @@ class DashboardLiveMatchResponse {
   };
 }
 
+class DashboardRecentMatchResponse {
+  bool success;
+  List<CompletedMatchData> data;
+
+  DashboardRecentMatchResponse({required this.success, required this.data});
+
+  factory DashboardRecentMatchResponse.fromJson(Map<String, dynamic> json) =>
+      DashboardRecentMatchResponse(
+        success: json["success"] ?? false,
+        data:
+            json["data"] != null
+                ? List<CompletedMatchData>.from(
+                  json["data"].map((x) => CompletedMatchData.fromJson(x)),
+                )
+                : [],
+      );
+}
+
 class LiveMatchData {
   int matchId;
   String matchName;
@@ -94,4 +112,47 @@ class LiveMatchData {
 
     return int.tryParse(value.toString());
   }
+}
+
+class CompletedMatchData {
+  int matchId;
+  String matchName;
+  String hostTeam;
+  String hostScore;
+  String visitorTeam;
+  String visitorScore;
+  String result;
+  String createdAt;
+  int? createdByUserId;
+
+  CompletedMatchData({
+    required this.matchId,
+    required this.matchName,
+    required this.hostTeam,
+    required this.hostScore,
+    required this.visitorTeam,
+    required this.visitorScore,
+    required this.result,
+    required this.createdAt,
+    this.createdByUserId,
+  });
+
+  factory CompletedMatchData.fromJson(Map<String, dynamic> json) =>
+      CompletedMatchData(
+        matchId: json["match_id"] ?? 0,
+        matchName: json["match_name"] ?? '',
+        hostTeam: json["host_team"] ?? '',
+        hostScore: json["host_score"] ?? '',
+        visitorTeam: json["visitor_team"] ?? '',
+        visitorScore: json["visitor_score"] ?? '',
+        result: json["result"] ?? 'Match completed',
+        createdAt: json["created_at"]?.toString() ?? '',
+        createdByUserId: LiveMatchData._parseNullableInt(
+          json["created_by_user_id"] ??
+              json["created_by_id"] ??
+              json["created_by"] ??
+              json["user_id"] ??
+              json["owner_id"],
+        ),
+      );
 }

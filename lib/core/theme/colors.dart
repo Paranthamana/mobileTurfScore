@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 
 class AppColors {
+  static const Color brandInk = Color(0xFF0F172A);
+  static const Color brandField = Color(0xFF166534);
+  static const Color brandMint = Color(0xFFF0FFF6);
+
   // Brand Colors
   static const Color primary = Color(0xFF00C853); // Premium Green
   static const Color primaryDark = Color(0xFF009624);
@@ -36,6 +40,12 @@ class AppColors {
   
   static const LinearGradient darkCardGradient = LinearGradient(
     colors: [Color(0xFF2C2C2C), Color(0xFF1A1A1A)],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+  );
+
+  static const LinearGradient brandHeroGradient = LinearGradient(
+    colors: [brandInk, brandField],
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
   );

@@ -8,8 +8,12 @@ class DashboardLoading extends DashboardState {}
 
 class DashboardLoaded extends DashboardState {
   final List<LiveMatchData> liveMatches;
+  final List<CompletedMatchData> recentMatches;
 
-  DashboardLoaded({required this.liveMatches});
+  DashboardLoaded({
+    required this.liveMatches,
+    required this.recentMatches,
+  });
 }
 
 class DashboardError extends DashboardState {

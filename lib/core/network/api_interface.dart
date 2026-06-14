@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
+import 'package:turfscore/core/utils/util_method.dart';
 
 import '../storage/session_manager.dart';
 
@@ -64,7 +65,7 @@ class ApiInterface {
       _handleError(e);
       rethrow;
     } catch (e) {
-      debugPrint('Unexpected error occurred: $e');
+      UtilMethod.debugLog('Unexpected error occurred: $e');
       rethrow;
     }
   }
@@ -88,7 +89,7 @@ class ApiInterface {
       _handleError(e);
       rethrow;
     } catch (e) {
-      debugPrint('Unexpected error occurred: $e');
+      UtilMethod.debugLog('Unexpected error occurred: $e');
       rethrow;
     }
   }
@@ -104,13 +105,15 @@ class ApiInterface {
         errorDescription = "Connection timeout with API server";
         break;
       case DioExceptionType.connectionError:
-        errorDescription = "Connection to API server failed due to internet connection";
+        errorDescription =
+            "Connection to API server failed due to internet connection";
         break;
       case DioExceptionType.receiveTimeout:
         errorDescription = "Receive timeout in connection with API server";
         break;
       case DioExceptionType.badResponse:
-        errorDescription = "Received invalid status code: ${error.response?.statusCode}. Message: ${error.response?.data}";
+        errorDescription =
+            "Received invalid status code: ${error.response?.statusCode}. Message: ${error.response?.data}";
         break;
       case DioExceptionType.sendTimeout:
         errorDescription = "Send timeout in connection with API server";
@@ -122,6 +125,6 @@ class ApiInterface {
         errorDescription = "Unexpected error occurred";
         break;
     }
-    debugPrint("API Error: $errorDescription");
+    UtilMethod.debugLog("API Error: $errorDescription");
   }
 }

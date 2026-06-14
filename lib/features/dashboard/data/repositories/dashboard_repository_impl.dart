@@ -15,4 +15,13 @@ class DashboardRepositoryImpl implements DashboardRepository {
       rethrow;
     }
   }
+
+  @override
+  Future<List<CompletedMatchData>> getRecentMatches() async {
+    try {
+      return await remoteDataSource.getRecentMatches();
+    } catch (e) {
+      rethrow;
+    }
+  }
 }
