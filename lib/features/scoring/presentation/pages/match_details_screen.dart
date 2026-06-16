@@ -67,12 +67,8 @@ class _MatchDetailsScreenState extends State<MatchDetailsScreen> {
                     elevation: 0,
                     backgroundColor: Colors.transparent,
                     flexibleSpace: Container(
-                      decoration: const BoxDecoration(
-                        gradient: LinearGradient(
-                          colors: [Color(0xFF0F172A), Color(0xFF166534)],
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                        ),
+                      decoration: BoxDecoration(
+                        gradient: AppColors.brandHeroGradient,
                       ),
                     ),
                     titleSpacing: 18.w,
@@ -141,7 +137,7 @@ class _MatchDetailsScreenState extends State<MatchDetailsScreen> {
                               borderRadius: BorderRadius.circular(999.r),
                             ),
                             indicatorSize: TabBarIndicatorSize.tab,
-                            labelColor: const Color(0xFF0F172A),
+                            labelColor: AppColors.brandInk,
                             unselectedLabelColor: Colors.white,
                             labelStyle: TextStyle(
                               fontSize: 11.sp,
@@ -211,7 +207,8 @@ class _MatchDetailsScreenState extends State<MatchDetailsScreen> {
       return _buildCenteredState(
         icon: Icons.sports_cricket_rounded,
         title: 'Loading match desk',
-        subtitle: 'Pulling together live summary, innings cards, and ball-by-ball data.',
+        subtitle:
+            'Pulling together live summary, innings cards, and ball-by-ball data.',
         child: const CircularProgressIndicator(),
       );
     }
@@ -285,8 +282,8 @@ class _MatchDetailsScreenState extends State<MatchDetailsScreen> {
                   if (details.overview.isSuperOver)
                     _buildTagPill(
                       'Super Over',
-                      const Color(0xFF7C2D12),
-                      const Color(0xFFFFEDD5),
+                      AppColors.goldDeep,
+                      AppColors.goldSoft,
                     ),
                 ],
               ),
@@ -324,11 +321,7 @@ class _MatchDetailsScreenState extends State<MatchDetailsScreen> {
                       vertical: 16.h,
                     ),
                     decoration: BoxDecoration(
-                      gradient: const LinearGradient(
-                        colors: [Color(0xFF0F172A), Color(0xFF166534)],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                      ),
+                      gradient: AppColors.brandHeroGradient,
                       borderRadius: BorderRadius.circular(22.r),
                     ),
                     child: Column(
@@ -370,13 +363,13 @@ class _MatchDetailsScreenState extends State<MatchDetailsScreen> {
                 width: double.infinity,
                 padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 12.h),
                 decoration: BoxDecoration(
-                  color: AppColors.backgroundLight,
+                  color: AppColors.surfaceMuted,
                   borderRadius: BorderRadius.circular(16.r),
                 ),
                 child: Text(
                   _matchResult(details),
                   style: theme.textTheme.bodyMedium?.copyWith(
-                    color: AppColors.primaryDark,
+                    color: AppColors.brandField,
                     fontWeight: FontWeight.w700,
                   ),
                 ),
@@ -409,8 +402,8 @@ class _MatchDetailsScreenState extends State<MatchDetailsScreen> {
                   child: ElevatedButton.icon(
                     style: ElevatedButton.styleFrom(
                       padding: EdgeInsets.symmetric(vertical: 14.h),
-                      backgroundColor: Colors.white,
-                      foregroundColor: const Color(0xFF0F172A),
+                      backgroundColor: AppColors.accent,
+                      foregroundColor: AppColors.brandInk,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(14.r),
                       ),
@@ -420,7 +413,8 @@ class _MatchDetailsScreenState extends State<MatchDetailsScreen> {
                         context,
                         MaterialPageRoute(
                           builder:
-                              (_) => AdminScoringScreen(matchId: widget.matchId),
+                              (_) =>
+                                  AdminScoringScreen(matchId: widget.matchId),
                         ),
                       );
                     },
@@ -538,14 +532,14 @@ class _MatchDetailsScreenState extends State<MatchDetailsScreen> {
                 children: [
                   _buildTagPill(
                     'Innings ${live.inningsNumber}',
-                    const Color(0xFFB91C1C),
-                    const Color(0xFFFEE2E2),
+                    AppColors.errorDeep,
+                    AppColors.liveSoft,
                   ),
                   SizedBox(width: 8.w),
                   _buildTagPill(
                     live.target > 0 ? 'CHASE' : 'SETUP',
-                    const Color(0xFF166534),
-                    const Color(0xFFE8F7EE),
+                    AppColors.successDeep,
+                    AppColors.successSoft,
                   ),
                   const Spacer(),
                   Flexible(
@@ -588,11 +582,7 @@ class _MatchDetailsScreenState extends State<MatchDetailsScreen> {
                       vertical: 16.h,
                     ),
                     decoration: BoxDecoration(
-                      gradient: const LinearGradient(
-                        colors: [Color(0xFF0F172A), Color(0xFF166534)],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                      ),
+                      gradient: AppColors.brandHeroGradient,
                       borderRadius: BorderRadius.circular(22.r),
                     ),
                     child: Column(
@@ -640,7 +630,7 @@ class _MatchDetailsScreenState extends State<MatchDetailsScreen> {
                 width: double.infinity,
                 padding: EdgeInsets.all(14.w),
                 decoration: BoxDecoration(
-                  color: AppColors.backgroundLight,
+                  color: AppColors.surfaceMuted,
                   borderRadius: BorderRadius.circular(18.r),
                 ),
                 child: Column(
@@ -651,7 +641,7 @@ class _MatchDetailsScreenState extends State<MatchDetailsScreen> {
                           ? 'CRR ${live.currentRunRate} | Target ${live.target} | RRR ${live.requiredRunRate}'
                           : 'CRR ${live.currentRunRate} | Partnership ${live.partnershipRuns} (${live.partnershipBalls})',
                       style: theme.textTheme.bodyMedium?.copyWith(
-                        color: const Color(0xFF0F172A),
+                        color: AppColors.brandInk,
                         fontWeight: FontWeight.w700,
                         height: 1.3,
                       ),
@@ -718,8 +708,8 @@ class _MatchDetailsScreenState extends State<MatchDetailsScreen> {
                     const Spacer(),
                     _buildCompactScorePill(
                       '${live.partnershipRuns} in ${live.partnershipBalls}',
-                      const Color(0xFFE8F7EE),
-                      const Color(0xFF166534),
+                      AppColors.successSoft,
+                      AppColors.successDeep,
                     ),
                   ],
                 ),
@@ -761,7 +751,7 @@ class _MatchDetailsScreenState extends State<MatchDetailsScreen> {
                     width: double.infinity,
                     padding: EdgeInsets.all(14.w),
                     decoration: BoxDecoration(
-                      color: AppColors.backgroundLight,
+                      color: AppColors.surfaceMuted,
                       borderRadius: BorderRadius.circular(18.r),
                     ),
                     child: Column(
@@ -780,8 +770,8 @@ class _MatchDetailsScreenState extends State<MatchDetailsScreen> {
                             ),
                             _buildCompactScorePill(
                               '${details.bowler!.overs} ov',
-                              const Color(0xFFEEF2FF),
-                              const Color(0xFF1D4ED8),
+                              AppColors.infoSoft,
+                              AppColors.infoDeep,
                             ),
                           ],
                         ),
@@ -868,103 +858,108 @@ class _MatchDetailsScreenState extends State<MatchDetailsScreen> {
                 ],
               ),
               child: ExpansionTile(
-                  initiallyExpanded: innings.inningsNumber == details.scorecards.first.inningsNumber,
-                  tilePadding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 10.h),
-                  childrenPadding: EdgeInsets.fromLTRB(18.w, 0, 18.w, 18.h),
-                  shape: const Border(),
-                  collapsedShape: const Border(),
-                  title: Text(
-                    innings.title,
-                    style: theme.textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.w800,
-                      color: const Color(0xFF0F172A),
-                    ),
+                initiallyExpanded:
+                    innings.inningsNumber ==
+                    details.scorecards.first.inningsNumber,
+                tilePadding: EdgeInsets.symmetric(
+                  horizontal: 18.w,
+                  vertical: 10.h,
+                ),
+                childrenPadding: EdgeInsets.fromLTRB(18.w, 0, 18.w, 18.h),
+                shape: const Border(),
+                collapsedShape: const Border(),
+                title: Text(
+                  innings.title,
+                  style: theme.textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.w800,
+                    color: const Color(0xFF0F172A),
                   ),
-                  subtitle: Padding(
-                    padding: EdgeInsets.only(top: 6.h),
-                    child: Wrap(
+                ),
+                subtitle: Padding(
+                  padding: EdgeInsets.only(top: 6.h),
+                  child: Wrap(
+                    spacing: 10.w,
+                    runSpacing: 10.h,
+                    children: [
+                      _buildCompactScorePill(
+                        '${innings.totalRuns}/${innings.totalWickets}',
+                        AppColors.successSoft,
+                        AppColors.successDeep,
+                      ),
+                      _buildCompactScorePill(
+                        '${innings.overs} ov',
+                        AppColors.infoSoft,
+                        AppColors.infoDeep,
+                      ),
+                      if (innings.target > 0)
+                        _buildCompactScorePill(
+                          'Target ${innings.target}',
+                          AppColors.goldSoft,
+                          AppColors.goldDeep,
+                        ),
+                    ],
+                  ),
+                ),
+                children: [
+                  _buildScoreSectionTitle(theme, 'Batting Card'),
+                  SizedBox(height: 10.h),
+                  _buildScorecardHeader(theme),
+                  SizedBox(height: 8.h),
+                  if (innings.batting.isEmpty)
+                    _buildCompactEmptyLine('No batting data available.')
+                  else
+                    ...innings.batting.map(
+                      (entry) => _buildScorecardBattingRow(entry, theme),
+                    ),
+                  SizedBox(height: 18.h),
+                  _buildScoreSectionTitle(theme, 'Bowling Card'),
+                  SizedBox(height: 10.h),
+                  _buildBowlingHeader(theme),
+                  SizedBox(height: 8.h),
+                  if (innings.bowling.isEmpty)
+                    _buildCompactEmptyLine('No bowling data available.')
+                  else
+                    ...innings.bowling.map(
+                      (entry) => _buildBowlerScoreRow(
+                        entry.playerName,
+                        entry.overs,
+                        '-',
+                        entry.runs.toString(),
+                        entry.wickets.toString(),
+                        entry.economy,
+                        theme,
+                      ),
+                    ),
+                  if (innings.fallOfWickets.isNotEmpty) ...[
+                    SizedBox(height: 18.h),
+                    _buildScoreSectionTitle(theme, 'Fall Of Wickets'),
+                    SizedBox(height: 10.h),
+                    Wrap(
                       spacing: 10.w,
                       runSpacing: 10.h,
-                      children: [
-                        _buildCompactScorePill(
-                          '${innings.totalRuns}/${innings.totalWickets}',
-                          const Color(0xFFE8F7EE),
-                          const Color(0xFF166534),
-                        ),
-                        _buildCompactScorePill(
-                          '${innings.overs} ov',
-                          const Color(0xFFEEF2FF),
-                          const Color(0xFF1D4ED8),
-                        ),
-                        if (innings.target > 0)
-                          _buildCompactScorePill(
-                            'Target ${innings.target}',
-                            const Color(0xFFFFF1CC),
-                            const Color(0xFFB45309),
-                          ),
-                      ],
+                      children:
+                          innings.fallOfWickets.map((entry) {
+                            return Container(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 12.w,
+                                vertical: 10.h,
+                              ),
+                              decoration: BoxDecoration(
+                                color: AppColors.backgroundLight,
+                                borderRadius: BorderRadius.circular(14.r),
+                              ),
+                              child: Text(
+                                '${entry.playerName}  ${entry.score} (${entry.overs})',
+                                style: theme.textTheme.bodyMedium?.copyWith(
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                            );
+                          }).toList(),
                     ),
-                  ),
-                  children: [
-                    _buildScoreSectionTitle(theme, 'Batting Card'),
-                    SizedBox(height: 10.h),
-                    _buildScorecardHeader(theme),
-                    SizedBox(height: 8.h),
-                    if (innings.batting.isEmpty)
-                      _buildCompactEmptyLine('No batting data available.')
-                    else
-                      ...innings.batting.map(
-                        (entry) => _buildScorecardBattingRow(entry, theme),
-                      ),
-                    SizedBox(height: 18.h),
-                    _buildScoreSectionTitle(theme, 'Bowling Card'),
-                    SizedBox(height: 10.h),
-                    _buildBowlingHeader(theme),
-                    SizedBox(height: 8.h),
-                    if (innings.bowling.isEmpty)
-                      _buildCompactEmptyLine('No bowling data available.')
-                    else
-                      ...innings.bowling.map(
-                        (entry) => _buildBowlerScoreRow(
-                          entry.playerName,
-                          entry.overs,
-                          '-',
-                          entry.runs.toString(),
-                          entry.wickets.toString(),
-                          entry.economy,
-                          theme,
-                        ),
-                      ),
-                    if (innings.fallOfWickets.isNotEmpty) ...[
-                      SizedBox(height: 18.h),
-                      _buildScoreSectionTitle(theme, 'Fall Of Wickets'),
-                      SizedBox(height: 10.h),
-                      Wrap(
-                        spacing: 10.w,
-                        runSpacing: 10.h,
-                        children:
-                            innings.fallOfWickets.map((entry) {
-                              return Container(
-                                padding: EdgeInsets.symmetric(
-                                  horizontal: 12.w,
-                                  vertical: 10.h,
-                                ),
-                                decoration: BoxDecoration(
-                                  color: AppColors.backgroundLight,
-                                  borderRadius: BorderRadius.circular(14.r),
-                                ),
-                                child: Text(
-                                  '${entry.playerName}  ${entry.score} (${entry.overs})',
-                                  style: theme.textTheme.bodyMedium?.copyWith(
-                                    fontWeight: FontWeight.w700,
-                                  ),
-                                ),
-                              );
-                            }).toList(),
-                      ),
-                    ],
                   ],
-                ),
+                ],
+              ),
             );
           }).toList(),
     );
@@ -1159,11 +1154,11 @@ class _MatchDetailsScreenState extends State<MatchDetailsScreen> {
           width: 38.r,
           height: 38.r,
           decoration: BoxDecoration(
-            color: const Color(0xFFEEF7F0),
+            color: AppColors.accent,
             borderRadius: BorderRadius.circular(14.r),
           ),
           alignment: Alignment.center,
-          child: Icon(icon, color: const Color(0xFF166534), size: 18.r),
+          child: Icon(icon, color: AppColors.brandField, size: 18.r),
         ),
         SizedBox(width: 12.w),
         Expanded(
@@ -1202,14 +1197,14 @@ class _MatchDetailsScreenState extends State<MatchDetailsScreen> {
           width: 40.r,
           height: 40.r,
           decoration: BoxDecoration(
-            color: const Color(0xFFEEF7F0),
+            color: AppColors.accent,
             borderRadius: BorderRadius.circular(14.r),
           ),
           alignment: Alignment.center,
           child: Text(
             label,
             style: TextStyle(
-              color: const Color(0xFF166534),
+              color: AppColors.brandField,
               fontSize: 9.sp,
               fontWeight: FontWeight.w800,
             ),
@@ -1294,7 +1289,7 @@ class _MatchDetailsScreenState extends State<MatchDetailsScreen> {
       width: double.infinity,
       padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 12.h),
       decoration: BoxDecoration(
-        color: const Color(0xFFF8FAFC),
+        color: AppColors.surfaceMuted,
         borderRadius: BorderRadius.circular(14.r),
       ),
       child: Text(
@@ -1316,17 +1311,33 @@ class _MatchDetailsScreenState extends State<MatchDetailsScreen> {
           child: Text('Batter', style: theme.textTheme.bodySmall),
         ),
         Expanded(
-          child: Text('R', style: theme.textTheme.bodySmall, textAlign: TextAlign.center),
+          child: Text(
+            'R',
+            style: theme.textTheme.bodySmall,
+            textAlign: TextAlign.center,
+          ),
         ),
         Expanded(
-          child: Text('B', style: theme.textTheme.bodySmall, textAlign: TextAlign.center),
+          child: Text(
+            'B',
+            style: theme.textTheme.bodySmall,
+            textAlign: TextAlign.center,
+          ),
         ),
         Expanded(
           flex: 2,
-          child: Text('Boundaries', style: theme.textTheme.bodySmall, textAlign: TextAlign.center),
+          child: Text(
+            'Boundaries',
+            style: theme.textTheme.bodySmall,
+            textAlign: TextAlign.center,
+          ),
         ),
         Expanded(
-          child: Text('SR', style: theme.textTheme.bodySmall, textAlign: TextAlign.right),
+          child: Text(
+            'SR',
+            style: theme.textTheme.bodySmall,
+            textAlign: TextAlign.right,
+          ),
         ),
       ],
     );
@@ -1340,7 +1351,7 @@ class _MatchDetailsScreenState extends State<MatchDetailsScreen> {
       margin: EdgeInsets.only(bottom: 10.h),
       padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
       decoration: BoxDecoration(
-        color: entry.isOut ? Colors.white : const Color(0xFFF8FAFC),
+        color: entry.isOut ? Colors.white : AppColors.surfaceMuted,
         borderRadius: BorderRadius.circular(16.r),
         border: Border.all(color: Colors.black.withValues(alpha: 0.04)),
       ),
@@ -1394,17 +1405,9 @@ class _MatchDetailsScreenState extends State<MatchDetailsScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  _buildBoundaryStatBadge(
-                    '4',
-                    entry.fours,
-                    const Color(0xFF2563EB),
-                  ),
+                  _buildBoundaryStatBadge('4', entry.fours, AppColors.infoDeep),
                   SizedBox(width: 6.w),
-                  _buildBoundaryStatBadge(
-                    '6',
-                    entry.sixes,
-                    const Color(0xFFF97316),
-                  ),
+                  _buildBoundaryStatBadge('6', entry.sixes, AppColors.goldDeep),
                 ],
               ),
             ),
@@ -1429,7 +1432,9 @@ class _MatchDetailsScreenState extends State<MatchDetailsScreen> {
       decoration: BoxDecoration(
         color: color.withValues(alpha: value > 0 ? 0.12 : 0.06),
         borderRadius: BorderRadius.circular(12.r),
-        border: Border.all(color: color.withValues(alpha: value > 0 ? 0.22 : 0.10)),
+        border: Border.all(
+          color: color.withValues(alpha: value > 0 ? 0.22 : 0.10),
+        ),
       ),
       child: Text(
         '$label:$value',
@@ -1453,10 +1458,7 @@ class _MatchDetailsScreenState extends State<MatchDetailsScreen> {
           duration: 320.ms,
           curve: Curves.easeOutBack,
         )
-        .shimmer(
-          duration: 700.ms,
-          color: color.withValues(alpha: 0.20),
-        );
+        .shimmer(duration: 700.ms, color: color.withValues(alpha: 0.20));
   }
 
   Widget _buildStatusBadge(String label) {
@@ -1465,16 +1467,16 @@ class _MatchDetailsScreenState extends State<MatchDetailsScreen> {
 
     switch (label.toLowerCase()) {
       case 'completed':
-        backgroundColor = const Color(0xFFDDF7E8);
-        textColor = const Color(0xFF166534);
+        backgroundColor = AppColors.successSoft;
+        textColor = AppColors.successDeep;
         break;
       case 'live':
         backgroundColor = const Color(0xFFFFE3E3);
         textColor = const Color(0xFFB42318);
         break;
       default:
-        backgroundColor = const Color(0xFFE8EEF9);
-        textColor = const Color(0xFF0F4C81);
+        backgroundColor = AppColors.infoSoft;
+        textColor = AppColors.infoDeep;
         break;
     }
 
@@ -1514,80 +1516,6 @@ class _MatchDetailsScreenState extends State<MatchDetailsScreen> {
     );
   }
 
-  Widget _buildTeamHero(
-    ThemeData theme,
-    String teamName, {
-    required String label,
-  }) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 14.h),
-      decoration: BoxDecoration(
-        color: Colors.white.withValues(alpha: 0.10),
-        borderRadius: BorderRadius.circular(18.r),
-        border: Border.all(color: Colors.white.withValues(alpha: 0.08)),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            label.toUpperCase(),
-            style: theme.textTheme.labelSmall?.copyWith(
-              color: Colors.white.withValues(alpha: 0.65),
-              fontWeight: FontWeight.w800,
-              letterSpacing: 1.2,
-            ),
-          ),
-          SizedBox(height: 8.h),
-          Text(
-            _fallback(teamName),
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
-            style: theme.textTheme.titleMedium?.copyWith(
-              color: Colors.white,
-              fontWeight: FontWeight.w800,
-              height: 1.15,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildHeroMetric(String label, String value) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 14.h),
-      decoration: BoxDecoration(
-        color: Colors.white.withValues(alpha: 0.10),
-        borderRadius: BorderRadius.circular(18.r),
-        border: Border.all(color: Colors.white.withValues(alpha: 0.08)),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            value,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 18.sp,
-              fontWeight: FontWeight.w900,
-            ),
-          ),
-          SizedBox(height: 4.h),
-          Text(
-            label,
-            style: TextStyle(
-              color: Colors.white.withValues(alpha: 0.68),
-              fontSize: 12.sp,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
   Widget _buildInningsSummaryCard(
     ThemeData theme,
     MatchDetailsData details,
@@ -1616,18 +1544,18 @@ class _MatchDetailsScreenState extends State<MatchDetailsScreen> {
             children: [
               _buildTagPill(
                 'Innings ${innings.inningsNumber}',
-                const Color(0xFF0F172A),
-                const Color(0xFFF1F5F9),
+                AppColors.brandInk,
+                AppColors.surfaceMuted,
               ),
               const Spacer(),
               _buildTagPill(
                 innings.isCompleted ? 'Closed' : 'In Progress',
                 innings.isCompleted
-                    ? const Color(0xFF166534)
-                    : const Color(0xFFB45309),
+                    ? AppColors.successDeep
+                    : AppColors.goldDeep,
                 innings.isCompleted
-                    ? const Color(0xFFDDF7E8)
-                    : const Color(0xFFFFF1CC),
+                    ? AppColors.successSoft
+                    : AppColors.goldSoft,
               ),
             ],
           ),
@@ -1652,7 +1580,7 @@ class _MatchDetailsScreenState extends State<MatchDetailsScreen> {
             width: double.infinity,
             padding: EdgeInsets.all(14.w),
             decoration: BoxDecoration(
-              color: const Color(0xFFF8FAFC),
+              color: AppColors.surfaceMuted,
               borderRadius: BorderRadius.circular(18.r),
             ),
             child: Column(
@@ -1686,7 +1614,7 @@ class _MatchDetailsScreenState extends State<MatchDetailsScreen> {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 10.h),
       decoration: BoxDecoration(
-        color: const Color(0xFFF8FAFC),
+        color: AppColors.surfaceMuted,
         borderRadius: BorderRadius.circular(16.r),
         border: Border.all(color: Colors.black.withValues(alpha: 0.04)),
       ),
@@ -1947,7 +1875,7 @@ class _MatchDetailsScreenState extends State<MatchDetailsScreen> {
             ? AppColors.error
             : isBigHit
             ? AppColors.primary
-            : const Color(0xFF0F172A);
+            : AppColors.brandInk;
 
     return Container(
       margin: EdgeInsets.only(bottom: 12.h),
@@ -2013,95 +1941,6 @@ class _MatchDetailsScreenState extends State<MatchDetailsScreen> {
     );
   }
 
-  Widget _buildOverSummary(
-    String over,
-    String runs,
-    String wickets,
-    String balls,
-    ThemeData theme,
-  ) {
-    return Card(
-      margin: EdgeInsets.only(bottom: 12.h),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16.r),
-        side: BorderSide(color: Colors.grey.withValues(alpha: 0.1)),
-      ),
-      elevation: 0,
-      child: Padding(
-        padding: EdgeInsets.all(16.w),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  over,
-                  style: theme.textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Container(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 12.w,
-                    vertical: 4.h,
-                  ),
-                  decoration: BoxDecoration(
-                    color: AppColors.primary.withValues(alpha: 0.1),
-                    borderRadius: BorderRadius.circular(20.r),
-                  ),
-                  child: Text(
-                    '$runs | $wickets',
-                    style: theme.textTheme.bodyMedium?.copyWith(
-                      color: AppColors.primary,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(height: 12.h),
-            Wrap(
-              spacing: 8.w,
-              runSpacing: 8.h,
-              children:
-                  balls.split(' ').where((ball) => ball.isNotEmpty).map((ball) {
-                    final isWicket = ball.toUpperCase().contains('W');
-                    final isBoundary = ball.contains('4') || ball.contains('6');
-                    var bgColor = Colors.grey.withValues(alpha: 0.1);
-                    var textColor = AppColors.textLight;
-                    if (isWicket) {
-                      bgColor = AppColors.error;
-                      textColor = Colors.white;
-                    } else if (isBoundary) {
-                      bgColor = AppColors.primary;
-                      textColor = Colors.white;
-                    }
-                    return Container(
-                      width: 32.r,
-                      height: 32.r,
-                      decoration: BoxDecoration(
-                        color: bgColor,
-                        shape: BoxShape.circle,
-                      ),
-                      alignment: Alignment.center,
-                      child: Text(
-                        ball,
-                        style: TextStyle(
-                          color: textColor,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 12.sp,
-                        ),
-                      ),
-                    );
-                  }).toList(),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
   Widget _buildModernOverSummary(
     String over,
     String runs,
@@ -2109,7 +1948,8 @@ class _MatchDetailsScreenState extends State<MatchDetailsScreen> {
     String balls,
     ThemeData theme,
   ) {
-    final ballItems = balls.split(' ').where((ball) => ball.isNotEmpty).toList();
+    final ballItems =
+        balls.split(' ').where((ball) => ball.isNotEmpty).toList();
 
     return Container(
       margin: EdgeInsets.only(bottom: 12.h),
@@ -2140,10 +1980,7 @@ class _MatchDetailsScreenState extends State<MatchDetailsScreen> {
                 ),
               ),
               Container(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 12.w,
-                  vertical: 5.h,
-                ),
+                padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 5.h),
                 decoration: BoxDecoration(
                   color: AppColors.primary.withValues(alpha: 0.10),
                   borderRadius: BorderRadius.circular(999.r),
@@ -2173,15 +2010,16 @@ class _MatchDetailsScreenState extends State<MatchDetailsScreen> {
                 ballItems.map((ball) {
                   final normalized = ball.toUpperCase();
                   final isWicket = normalized.contains('W');
-                  final isBoundary = normalized.contains('4') || normalized.contains('6');
+                  final isBoundary =
+                      normalized.contains('4') || normalized.contains('6');
                   final isExtra =
                       normalized.startsWith('WD') ||
                       normalized.startsWith('NB') ||
                       normalized.startsWith('LB') ||
                       normalized.startsWith('B');
 
-                  Color bgColor = const Color(0xFFF1F5F9);
-                  Color textColor = const Color(0xFF0F172A);
+                  Color bgColor = AppColors.surfaceMuted;
+                  Color textColor = AppColors.brandInk;
 
                   if (isWicket) {
                     bgColor = AppColors.error;
@@ -2190,8 +2028,8 @@ class _MatchDetailsScreenState extends State<MatchDetailsScreen> {
                     bgColor = AppColors.primary;
                     textColor = Colors.white;
                   } else if (isExtra) {
-                    bgColor = const Color(0xFFFFF1CC);
-                    textColor = const Color(0xFFB45309);
+                    bgColor = AppColors.goldSoft;
+                    textColor = AppColors.goldDeep;
                   }
 
                   return Container(
@@ -2230,14 +2068,14 @@ class _MatchDetailsScreenState extends State<MatchDetailsScreen> {
         isWicket
             ? AppColors.error
             : normalizedEvent == '6'
-            ? const Color(0xFFF97316)
+            ? AppColors.goldDeep
             : normalizedEvent == '4'
-            ? const Color(0xFF2563EB)
+            ? AppColors.infoDeep
             : normalizedEvent == 'WD' ||
-                    normalizedEvent == 'NB' ||
-                    normalizedEvent == 'LB' ||
-                    normalizedEvent == 'B'
-            ? const Color(0xFFB45309)
+                normalizedEvent == 'NB' ||
+                normalizedEvent == 'LB' ||
+                normalizedEvent == 'B'
+            ? AppColors.goldDeep
             : AppColors.primary;
 
     return Container(
@@ -2317,7 +2155,7 @@ class _MatchDetailsScreenState extends State<MatchDetailsScreen> {
             width: 60.r,
             height: 60.r,
             decoration: BoxDecoration(
-              color: const Color(0xFFF1F5F9),
+              color: AppColors.surfaceMuted,
               borderRadius: BorderRadius.circular(18.r),
             ),
             alignment: Alignment.center,
@@ -2439,8 +2277,9 @@ class _MatchDetailsScreenState extends State<MatchDetailsScreen> {
       return <int, List<OverByBall>>{};
     }
 
-    final summaries = [...details.inningsSummaries]
-      ..sort((left, right) => left.inningsNumber.compareTo(right.inningsNumber));
+    final summaries = [
+      ...details.inningsSummaries,
+    ]..sort((left, right) => left.inningsNumber.compareTo(right.inningsNumber));
     final result = <int, List<OverByBall>>{};
 
     if (summaries.isEmpty) {
@@ -2470,9 +2309,8 @@ class _MatchDetailsScreenState extends State<MatchDetailsScreen> {
         continue;
       }
 
-      result[summary.inningsNumber] = details.overs
-          .sublist(cursor, cursor + expectedCount)
-          .toList();
+      result[summary.inningsNumber] =
+          details.overs.sublist(cursor, cursor + expectedCount).toList();
       cursor += expectedCount;
     }
 
@@ -2489,8 +2327,7 @@ class _MatchDetailsScreenState extends State<MatchDetailsScreen> {
   int _oversSummaryCount(String overs) {
     final parts = overs.split('.');
     final completedOvers = int.tryParse(parts.first.trim()) ?? 0;
-    final balls =
-        parts.length > 1 ? int.tryParse(parts[1].trim()) ?? 0 : 0;
+    final balls = parts.length > 1 ? int.tryParse(parts[1].trim()) ?? 0 : 0;
     return completedOvers + (balls > 0 ? 1 : 0);
   }
 

@@ -4,6 +4,7 @@ import 'core/network/dio_client.dart';
 import 'core/network/socket_service.dart';
 import 'core/network/api_interface.dart';
 import 'core/storage/session_manager.dart';
+import 'core/theme/app_theme_controller.dart';
 import 'features/auth/data/datasources/auth_remote_data_source.dart';
 import 'features/auth/data/repositories/auth_repository_impl.dart';
 import 'features/auth/domain/repositories/auth_repository.dart';
@@ -32,6 +33,7 @@ Future<void> init() async {
   // Core
   sl.registerLazySingleton(() => prefs);
   sl.registerLazySingleton(() => SessionManager(prefs: sl()));
+  sl.registerLazySingleton(() => AppThemeController(prefs: sl()));
   sl.registerLazySingleton(() => DioClient());
   sl.registerLazySingleton(() => SocketService());
   sl.registerLazySingleton(() => ApiInterface(sessionManager: sl()));

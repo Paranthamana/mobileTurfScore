@@ -7,6 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../core/storage/session_manager.dart';
 import '../../../../core/theme/colors.dart';
+import '../../../../core/widgets/brand_backdrop.dart';
 import '../../../../injection_container.dart';
 import '../../../scoring/presentation/bloc/scoring_bloc.dart';
 import '../../../scoring/presentation/pages/create_match_screen.dart';
@@ -57,7 +58,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       ),
       const _LiveTab(),
       _SeriesTab(onCreateTournament: _showTournamentSetupPreview),
-      _ProfileTab(onLogout: _logout),
+      _ProfileTab(onLogout: _logout, onOpenAppearance: _openAppearance),
     ];
   }
 
@@ -73,6 +74,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   void _openCreateSheet() {
     _showCreateMatchBottomSheet(context);
+  }
+
+  Future<void> _openAppearance() async {
+    await Navigator.pushNamed(context, '/appearance');
   }
 
   void _showTournamentSetupPreview() {
@@ -99,11 +104,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
     return Scaffold(
       extendBody: true,
-      backgroundColor: AppColors.backgroundLight,
+      backgroundColor: theme.scaffoldBackgroundColor,
       body: Stack(
         fit: StackFit.expand,
         children: [
-          const _DashboardBackdrop(),
+          const BrandBackdrop(),
           IndexedStack(index: _currentIndex, children: _screens),
         ],
       ),
@@ -116,15 +121,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
   Widget _buildCreateButton(ThemeData theme) {
     return DecoratedBox(
       decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          colors: [Color(0xFF0F172A), AppColors.primary],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
+        gradient: AppColors.primaryGradient,
         shape: BoxShape.circle,
         boxShadow: [
           BoxShadow(
-            color: AppColors.primary.withValues(alpha: 0.34),
+            color: AppColors.brandField.withValues(alpha: 0.28),
             blurRadius: 28,
             offset: const Offset(0, 12),
           ),
@@ -160,14 +161,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
               height: 76.h,
               padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 10.h),
               decoration: BoxDecoration(
-                color: const Color(0xFFF7FBF8).withValues(alpha: 0.95),
+                color: Colors.white.withValues(alpha: 0.84),
                 borderRadius: BorderRadius.circular(26.r),
                 border: Border.all(
-                  color: AppColors.primary.withValues(alpha: 0.10),
+                  color: AppColors.outline.withValues(alpha: 0.8),
                 ),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withValues(alpha: 0.08),
+                    color: AppColors.brandInk.withValues(alpha: 0.12),
                     blurRadius: 22,
                     offset: const Offset(0, 10),
                   ),
@@ -191,7 +192,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   Widget _buildNavItem(_DashboardNavItem item, int index) {
     final isSelected = _currentIndex == index;
-    final color = isSelected ? const Color(0xFF0F172A) : AppColors.textSecondaryLight;
+    final color =
+        isSelected ? AppColors.brandInk : AppColors.textSecondaryLight;
 
     return InkWell(
       borderRadius: BorderRadius.circular(18.r),
@@ -203,10 +205,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         height: 48.r,
         margin: EdgeInsets.symmetric(horizontal: 4.w),
         decoration: BoxDecoration(
-          color:
-              isSelected
-                  ? AppColors.primary.withValues(alpha: 0.12)
-                  : Colors.transparent,
+          color: isSelected ? AppColors.accent : Colors.transparent,
           borderRadius: BorderRadius.circular(18.r),
         ),
         child: Center(
@@ -293,7 +292,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   icon: Icons.emoji_events_rounded,
                   title: 'Open Series Desk',
                   subtitle: 'Manage leagues, cups, and upcoming fixtures.',
-                  color: AppColors.info,
+                  color: AppColors.purple,
                   onTap: () {
                     Navigator.pop(context);
                     setState(() {
@@ -327,67 +326,6 @@ class _DashboardNavItem {
   });
 }
 
-class _DashboardBackdrop extends StatelessWidget {
-  const _DashboardBackdrop();
-
-  @override
-  Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [
-            AppColors.backgroundLight,
-            AppColors.backgroundLight,
-            const Color(0xFFF0FFF6),
-          ],
-        ),
-      ),
-      child: Stack(
-        children: [
-          Positioned(
-            top: -70.h,
-            left: -20.w,
-            child: Container(
-              width: 240.w,
-              height: 240.w,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: AppColors.primary.withValues(alpha: 0.12),
-              ),
-            ),
-          ),
-          Positioned(
-            top: 140.h,
-            right: -40.w,
-            child: Container(
-              width: 190.w,
-              height: 190.w,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: const Color(0xFF0F172A).withValues(alpha: 0.06),
-              ),
-            ),
-          ),
-          Positioned(
-            bottom: 130.h,
-            left: 30.w,
-            child: Container(
-              width: 110.w,
-              height: 110.w,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: const Color(0xFF22C55E).withValues(alpha: 0.08),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
 class _SeriesTab extends StatelessWidget {
   final VoidCallback onCreateTournament;
 
@@ -409,11 +347,7 @@ class _SeriesTab extends StatelessWidget {
             Container(
               padding: EdgeInsets.all(22.w),
               decoration: BoxDecoration(
-                gradient: const LinearGradient(
-                  colors: [Color(0xFF0F172A), Color(0xFF1E293B)],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                ),
+                gradient: AppColors.darkCardGradient,
                 borderRadius: BorderRadius.circular(28.r),
                 boxShadow: [
                   BoxShadow(
@@ -432,7 +366,7 @@ class _SeriesTab extends StatelessWidget {
                       vertical: 6.h,
                     ),
                     decoration: BoxDecoration(
-                      color: AppColors.primary.withValues(alpha: 0.18),
+                      color: Colors.white.withValues(alpha: 0.12),
                       borderRadius: BorderRadius.circular(999.r),
                     ),
                     child: Text(
@@ -479,14 +413,14 @@ class _SeriesTab extends StatelessWidget {
             ),
             SizedBox(height: 14.h),
             Row(
-              children: const [
+              children: [
                 Expanded(
                   child: _InfoCard(
                     title: 'Knockout',
                     subtitle: 'Fast, high-stakes elimination rounds.',
                     icon: Icons.local_fire_department_rounded,
-                    tint: Color(0xFFFFEDD5),
-                    iconColor: Color(0xFFEA580C),
+                    tint: AppColors.goldSoft,
+                    iconColor: AppColors.goldDeep,
                   ),
                 ),
                 SizedBox(width: 14),
@@ -495,22 +429,22 @@ class _SeriesTab extends StatelessWidget {
                     title: 'Round Robin',
                     subtitle: 'Fair tables with every team getting a shot.',
                     icon: Icons.grid_view_rounded,
-                    tint: Color(0xFFDCFCE7),
-                    iconColor: Color(0xFF15803D),
+                    tint: AppColors.accent,
+                    iconColor: AppColors.brandField,
                   ),
                 ),
               ],
             ),
             SizedBox(height: 14.h),
             Row(
-              children: const [
+              children: [
                 Expanded(
                   child: _InfoCard(
                     title: 'Points Table',
                     subtitle: 'Track momentum, NRR, and standings cleanly.',
                     icon: Icons.leaderboard_rounded,
-                    tint: Color(0xFFDBEAFE),
-                    iconColor: Color(0xFF1D4ED8),
+                    tint: AppColors.infoSoft,
+                    iconColor: AppColors.infoDeep,
                   ),
                 ),
                 SizedBox(width: 14),
@@ -519,8 +453,8 @@ class _SeriesTab extends StatelessWidget {
                     title: 'Fixtures',
                     subtitle: 'Keep upcoming clashes visible for everyone.',
                     icon: Icons.calendar_month_rounded,
-                    tint: Color(0xFFF5F3FF),
-                    iconColor: Color(0xFF7C3AED),
+                    tint: AppColors.purpleSoft,
+                    iconColor: AppColors.purple,
                   ),
                 ),
               ],
@@ -607,13 +541,13 @@ class _LiveTab extends StatelessWidget {
                       vertical: 6.h,
                     ),
                     decoration: BoxDecoration(
-                      color: const Color(0xFFDCFCE7),
+                      color: AppColors.accent,
                       borderRadius: BorderRadius.circular(999.r),
                     ),
                     child: Text(
                       'Matches Desk',
                       style: TextStyle(
-                        color: const Color(0xFF166534),
+                        color: AppColors.brandField,
                         fontSize: 12.sp,
                         fontWeight: FontWeight.w700,
                       ),
@@ -643,14 +577,14 @@ class _LiveTab extends StatelessWidget {
               ),
             ),
             SizedBox(height: 14.h),
-            const _ActivityCard(
+            _ActivityCard(
               icon: Icons.sports_cricket_rounded,
               title: 'Open current matches',
               subtitle:
                   'Move from the dashboard into the right live scorecard quickly.',
               detail: 'Step 1',
-              tint: Color(0xFFDCFCE7),
-              iconColor: Color(0xFF15803D),
+              tint: AppColors.accent,
+              iconColor: AppColors.brandField,
             ),
             SizedBox(height: 12.h),
             const _ActivityCard(
@@ -658,8 +592,8 @@ class _LiveTab extends StatelessWidget {
               title: 'Track match pace',
               subtitle: 'Stay close to run rate, overs remaining, and wickets.',
               detail: 'Step 2',
-              tint: Color(0xFFDBEAFE),
-              iconColor: Color(0xFF1D4ED8),
+              tint: AppColors.infoSoft,
+              iconColor: AppColors.infoDeep,
             ),
             SizedBox(height: 12.h),
             const _ActivityCard(
@@ -668,8 +602,8 @@ class _LiveTab extends StatelessWidget {
               subtitle:
                   'Keep the scorer flow clean when the next ball matters most.',
               detail: 'Step 3',
-              tint: Color(0xFFFFEDD5),
-              iconColor: Color(0xFFEA580C),
+              tint: AppColors.goldSoft,
+              iconColor: AppColors.goldDeep,
             ),
           ],
         ),
@@ -680,8 +614,9 @@ class _LiveTab extends StatelessWidget {
 
 class _ProfileTab extends StatelessWidget {
   final VoidCallback onLogout;
+  final VoidCallback onOpenAppearance;
 
-  const _ProfileTab({required this.onLogout});
+  const _ProfileTab({required this.onLogout, required this.onOpenAppearance});
 
   @override
   Widget build(BuildContext context) {
@@ -700,11 +635,7 @@ class _ProfileTab extends StatelessWidget {
               width: double.infinity,
               padding: EdgeInsets.all(24.w),
               decoration: BoxDecoration(
-                gradient: const LinearGradient(
-                  colors: [Color(0xFF0F172A), Color(0xFF166534)],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                ),
+                gradient: AppColors.brandHeroGradient,
                 borderRadius: BorderRadius.circular(28.r),
               ),
               child: Column(
@@ -782,10 +713,11 @@ class _ProfileTab extends StatelessWidget {
               subtitle: 'Score alerts and match reminders',
             ),
             SizedBox(height: 12.h),
-            const _SettingsTile(
+            _SettingsTile(
               icon: Icons.palette_outlined,
               title: 'Appearance',
               subtitle: 'Theme and visual preferences',
+              onTap: onOpenAppearance,
             ),
             SizedBox(height: 12.h),
             const _SettingsTile(
@@ -918,7 +850,7 @@ class _InfoCard extends StatelessWidget {
             width: 40.r,
             height: 40.r,
             decoration: BoxDecoration(
-              color: Colors.white.withValues(alpha: 0.6),
+              color: AppColors.surfaceLight.withValues(alpha: 0.72),
               borderRadius: BorderRadius.circular(14.r),
             ),
             child: Icon(icon, color: iconColor, size: 22.r),
@@ -1098,60 +1030,71 @@ class _SettingsTile extends StatelessWidget {
   final IconData icon;
   final String title;
   final String subtitle;
+  final VoidCallback? onTap;
 
   const _SettingsTile({
     required this.icon,
     required this.title,
     required this.subtitle,
+    this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(18.w),
-      decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surface,
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
         borderRadius: BorderRadius.circular(22.r),
-        border: Border.all(color: AppColors.primary.withValues(alpha: 0.06)),
-      ),
-      child: Row(
-        children: [
-          Container(
-            width: 44.r,
-            height: 44.r,
-            decoration: BoxDecoration(
-              color: AppColors.primary.withValues(alpha: 0.1),
-              borderRadius: BorderRadius.circular(14.r),
-            ),
-            child: Icon(icon, color: AppColors.primary),
-          ),
-          SizedBox(width: 14.w),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.w800,
-                  ),
-                ),
-                SizedBox(height: 4.h),
-                Text(
-                  subtitle,
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: AppColors.textSecondaryLight,
-                  ),
-                ),
-              ],
+        onTap: onTap,
+        child: Ink(
+          padding: EdgeInsets.all(18.w),
+          decoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.surface,
+            borderRadius: BorderRadius.circular(22.r),
+            border: Border.all(
+              color: AppColors.primary.withValues(alpha: 0.06),
             ),
           ),
-          Icon(
-            Icons.arrow_forward_ios_rounded,
-            size: 16.r,
-            color: AppColors.textSecondaryLight,
+          child: Row(
+            children: [
+              Container(
+                width: 44.r,
+                height: 44.r,
+                decoration: BoxDecoration(
+                  color: AppColors.primary.withValues(alpha: 0.1),
+                  borderRadius: BorderRadius.circular(14.r),
+                ),
+                child: Icon(icon, color: AppColors.primary),
+              ),
+              SizedBox(width: 14.w),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      title,
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        fontWeight: FontWeight.w800,
+                      ),
+                    ),
+                    SizedBox(height: 4.h),
+                    Text(
+                      subtitle,
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        color: AppColors.textSecondaryLight,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Icon(
+                Icons.arrow_forward_ios_rounded,
+                size: 16.r,
+                color: AppColors.textSecondaryLight,
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }

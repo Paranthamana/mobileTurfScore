@@ -6,6 +6,7 @@ import '../bloc/scoring_bloc.dart';
 import '../bloc/scoring_event.dart';
 import '../bloc/scoring_state.dart';
 import '../../../../core/theme/colors.dart';
+import '../../../../core/widgets/brand_backdrop.dart';
 import 'admin_scoring_screen.dart';
 
 class CreateMatchScreen extends StatefulWidget {
@@ -128,7 +129,9 @@ class _CreateMatchScreenState extends State<CreateMatchScreen> {
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-              builder: (_) => AdminScoringScreen(matchId: state.response.data.matchId),
+              builder:
+                  (_) =>
+                      AdminScoringScreen(matchId: state.response.data.matchId),
             ),
           );
         } else if (state is ScoringError) {
@@ -141,90 +144,130 @@ class _CreateMatchScreenState extends State<CreateMatchScreen> {
           );
         }
       },
-      child: Scaffold(
-        appBar: AppBar(title: const Text('Create Match')),
-        body: Column(
-          children: [
-            _buildStepIndicator(),
-            Expanded(
-              child: PageView(
-                controller: _pageController,
-                onPageChanged: (index) => setState(() => _currentStep = index),
-                children: [
-                  SingleChildScrollView(
-                    padding: EdgeInsets.all(16.w),
-                    child: _buildTeamsForm(),
-                  ),
-                  SingleChildScrollView(
-                    padding: EdgeInsets.all(16.w),
-                    child: _buildTossSection(),
-                  ),
-                  SingleChildScrollView(
-                    padding: EdgeInsets.all(16.w),
-                    child: _buildOpenersSection(),
-                  ),
-                ],
+      child: Stack(
+        children: [
+          const Positioned.fill(child: BrandBackdrop()),
+          Scaffold(
+            backgroundColor: Colors.transparent,
+            appBar: AppBar(
+              foregroundColor: Colors.white,
+              title: const Text('Create Match'),
+              flexibleSpace: Container(
+                decoration: BoxDecoration(
+                  gradient: AppColors.brandHeroGradient,
+                ),
               ),
             ),
-          ],
-        ),
-        bottomNavigationBar: SafeArea(
-          child: Padding(
-            padding: EdgeInsets.all(16.w),
-            child: BlocBuilder<ScoringBloc, ScoringState>(
-              builder: (context, state) {
-                final isLoading = state is ScoringLoading;
-                return ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    padding: EdgeInsets.symmetric(vertical: 16.h),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12.r),
-                    ),
-                    backgroundColor: AppColors.primary,
-                    foregroundColor: Colors.white,
+            body: Column(
+              children: [
+                _buildStepIndicator(),
+                Expanded(
+                  child: PageView(
+                    controller: _pageController,
+                    onPageChanged:
+                        (index) => setState(() => _currentStep = index),
+                    children: [
+                      SingleChildScrollView(
+                        padding: EdgeInsets.all(16.w),
+                        child: _buildStageCard(_buildTeamsForm()),
+                      ),
+                      SingleChildScrollView(
+                        padding: EdgeInsets.all(16.w),
+                        child: _buildStageCard(_buildTossSection()),
+                      ),
+                      SingleChildScrollView(
+                        padding: EdgeInsets.all(16.w),
+                        child: _buildStageCard(_buildOpenersSection()),
+                      ),
+                    ],
                   ),
-                  onPressed:
-                      _isStepValid() && !isLoading && !_isSubmittingMatch
-                          ? () {
-                            if (_currentStep < 2) {
-                              _pageController.nextPage(
-                                duration: const Duration(milliseconds: 300),
-                                curve: Curves.easeInOut,
-                              );
-                            } else {
-                              _dispatchCreateMatch();
-                            }
-                          }
-                          : null,
-                  child:
-                      isLoading
-                          ? SizedBox(
-                            height: 20.h,
-                            width: 20.h,
-                            child: const CircularProgressIndicator(
-                              color: Colors.white,
-                              strokeWidth: 2,
-                            ),
-                          )
-                          : Text(
-                            _currentStep == 2 ? 'START MATCH' : 'CONTINUE',
-                            style: TextStyle(
-                              fontSize: 16.sp,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                );
-              },
+                ),
+              ],
+            ),
+            bottomNavigationBar: SafeArea(
+              child: Padding(
+                padding: EdgeInsets.all(16.w),
+                child: BlocBuilder<ScoringBloc, ScoringState>(
+                  builder: (context, state) {
+                    final isLoading = state is ScoringLoading;
+                    return ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        padding: EdgeInsets.symmetric(vertical: 16.h),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16.r),
+                        ),
+                        backgroundColor: AppColors.brandField,
+                        foregroundColor: Colors.white,
+                      ),
+                      onPressed:
+                          _isStepValid() && !isLoading && !_isSubmittingMatch
+                              ? () {
+                                if (_currentStep < 2) {
+                                  _pageController.nextPage(
+                                    duration: const Duration(milliseconds: 300),
+                                    curve: Curves.easeInOut,
+                                  );
+                                } else {
+                                  _dispatchCreateMatch();
+                                }
+                              }
+                              : null,
+                      child:
+                          isLoading
+                              ? SizedBox(
+                                height: 20.h,
+                                width: 20.h,
+                                child: const CircularProgressIndicator(
+                                  color: Colors.white,
+                                  strokeWidth: 2,
+                                ),
+                              )
+                              : Text(
+                                _currentStep == 2 ? 'START MATCH' : 'CONTINUE',
+                                style: TextStyle(
+                                  fontSize: 16.sp,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                    );
+                  },
+                ),
+              ),
             ),
           ),
-        ),
+        ],
       ),
+    );
+  }
+
+  Widget _buildStageCard(Widget child) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.surface,
+        borderRadius: BorderRadius.circular(28.r),
+        border: Border.all(color: AppColors.outline.withValues(alpha: 0.9)),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.brandInk.withValues(alpha: 0.08),
+            blurRadius: 22,
+            offset: const Offset(0, 12),
+          ),
+        ],
+      ),
+      padding: EdgeInsets.all(18.w),
+      child: child,
     );
   }
 
   Widget _buildStepIndicator() {
     return Container(
+      margin: EdgeInsets.fromLTRB(16.w, 14.h, 16.w, 0),
       padding: EdgeInsets.symmetric(vertical: 16.h, horizontal: 24.w),
+      decoration: BoxDecoration(
+        color: Colors.white.withValues(alpha: 0.76),
+        borderRadius: BorderRadius.circular(24.r),
+        border: Border.all(color: Colors.white.withValues(alpha: 0.65)),
+      ),
       child: Row(
         children: [
           _buildStepCircle(0, 'Teams'),
@@ -250,8 +293,8 @@ class _CreateMatchScreenState extends State<CreateMatchScreen> {
             shape: BoxShape.circle,
             color:
                 isCompleted || isActive
-                    ? AppColors.primary
-                    : Colors.grey.withValues(alpha: 0.2),
+                    ? AppColors.brandField
+                    : AppColors.surfaceMuted,
           ),
           child: Center(
             child:
@@ -263,7 +306,7 @@ class _CreateMatchScreenState extends State<CreateMatchScreen> {
                         color:
                             isCompleted || isActive
                                 ? Colors.white
-                                : Colors.grey,
+                                : AppColors.textSecondaryLight,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -274,7 +317,10 @@ class _CreateMatchScreenState extends State<CreateMatchScreen> {
           label,
           style: TextStyle(
             fontSize: 12.sp,
-            color: isCompleted || isActive ? AppColors.primary : Colors.grey,
+            color:
+                isCompleted || isActive
+                    ? AppColors.brandField
+                    : AppColors.textSecondaryLight,
             fontWeight: isActive ? FontWeight.bold : FontWeight.normal,
           ),
         ),
@@ -288,10 +334,7 @@ class _CreateMatchScreenState extends State<CreateMatchScreen> {
       child: Container(
         height: 2.h,
         margin: EdgeInsets.only(bottom: 20.h),
-        color:
-            isCompleted
-                ? AppColors.primary
-                : Colors.grey.withValues(alpha: 0.2),
+        color: isCompleted ? AppColors.primary : AppColors.outline,
       ),
     );
   }
@@ -502,13 +545,10 @@ class _CreateMatchScreenState extends State<CreateMatchScreen> {
       child: Container(
         padding: EdgeInsets.symmetric(vertical: 16.h),
         decoration: BoxDecoration(
-          color: isSelected ? AppColors.primary : Colors.transparent,
+          color: isSelected ? AppColors.brandField : Colors.transparent,
           borderRadius: BorderRadius.circular(12.r),
           border: Border.all(
-            color:
-                isSelected
-                    ? AppColors.primary
-                    : Colors.grey.withValues(alpha: 0.3),
+            color: isSelected ? AppColors.brandField : AppColors.outline,
           ),
         ),
         alignment: Alignment.center,

@@ -217,13 +217,7 @@ class _OfflineConnectionScreen extends StatelessWidget {
       child: PopScope(
         canPop: false,
         child: DecoratedBox(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              colors: [Color(0xFF052E1B), Color(0xFF0A1710)],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
-          ),
+          decoration: const BoxDecoration(gradient: AppColors.darkCardGradient),
           child: SafeArea(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 32),
@@ -272,7 +266,7 @@ class _OfflineConnectionScreen extends StatelessWidget {
                           child: CircularProgressIndicator(
                             strokeWidth: 2.4,
                             valueColor: AlwaysStoppedAnimation<Color>(
-                              AppColors.primaryLight,
+                              AppColors.primary,
                             ),
                           ),
                         ),
@@ -350,7 +344,7 @@ class _OfflineCricketPainter extends CustomPainter {
 
     final stumpPaint =
         Paint()
-          ..color = const Color(0xFFF7F0D0)
+          ..color = AppColors.goldSoft
           ..strokeWidth = width * 0.018
           ..strokeCap = StrokeCap.round;
 
@@ -370,7 +364,7 @@ class _OfflineCricketPainter extends CustomPainter {
 
     final batPaint =
         Paint()
-          ..color = const Color(0xFFE7B968)
+          ..color = AppColors.gold
           ..strokeWidth = width * 0.045
           ..strokeCap = StrokeCap.round;
 
@@ -382,7 +376,7 @@ class _OfflineCricketPainter extends CustomPainter {
 
     final handlePaint =
         Paint()
-          ..color = const Color(0xFF9B612B)
+          ..color = AppColors.goldDeep
           ..strokeWidth = width * 0.023
           ..strokeCap = StrokeCap.round;
 
@@ -395,7 +389,7 @@ class _OfflineCricketPainter extends CustomPainter {
     final ballPaint =
         Paint()
           ..shader = const LinearGradient(
-            colors: [Color(0xFFFF6B5A), Color(0xFFC92828)],
+            colors: [Color(0xFFFF7B72), Color(0xFFC13A4A)],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ).createShader(

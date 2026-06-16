@@ -9,52 +9,82 @@ class BrandBackdrop extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [
-            AppColors.backgroundLight,
-            AppColors.backgroundLight,
-            AppColors.brandMint,
-          ],
-        ),
-      ),
+      decoration: BoxDecoration(gradient: AppColors.surfaceGlowGradient),
       child: Stack(
         children: [
           Positioned(
-            top: -70.h,
-            left: -20.w,
+            top: -90.h,
+            left: -30.w,
             child: Container(
-              width: 240.w,
-              height: 240.w,
+              width: 270.w,
+              height: 270.w,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: AppColors.brandField.withValues(alpha: 0.12),
+                gradient: RadialGradient(
+                  colors: [
+                    AppColors.primary.withValues(alpha: 0.22),
+                    AppColors.primary.withValues(alpha: 0.02),
+                  ],
+                ),
               ),
             ),
           ),
           Positioned(
-            top: 140.h,
-            right: -40.w,
+            top: 110.h,
+            right: -52.w,
             child: Container(
-              width: 190.w,
-              height: 190.w,
+              width: 220.w,
+              height: 220.w,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: AppColors.brandInk.withValues(alpha: 0.06),
+                gradient: RadialGradient(
+                  colors: [
+                    AppColors.info.withValues(alpha: 0.14),
+                    AppColors.info.withValues(alpha: 0.01),
+                  ],
+                ),
               ),
             ),
           ),
           Positioned(
-            bottom: 130.h,
-            left: 30.w,
+            bottom: 110.h,
+            left: 18.w,
             child: Container(
-              width: 110.w,
-              height: 110.w,
+              width: 140.w,
+              height: 140.w,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: const Color(0xFF22C55E).withValues(alpha: 0.08),
+                gradient: RadialGradient(
+                  colors: [
+                    AppColors.gold.withValues(alpha: 0.18),
+                    AppColors.gold.withValues(alpha: 0.01),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          Positioned(
+            bottom: 32.h,
+            right: 22.w,
+            child: Transform.rotate(
+              angle: -0.28,
+              child: Container(
+                width: 94.w,
+                height: 94.w,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(28.r),
+                  gradient: LinearGradient(
+                    colors: [
+                      Colors.white.withValues(alpha: 0.82),
+                      AppColors.accent.withValues(alpha: 0.52),
+                    ],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                  border: Border.all(
+                    color: Colors.white.withValues(alpha: 0.55),
+                  ),
+                ),
               ),
             ),
           ),

@@ -122,11 +122,7 @@ class HomeScreen extends StatelessWidget {
           width: 52.r,
           height: 52.r,
           decoration: BoxDecoration(
-            gradient: const LinearGradient(
-              colors: [Color(0xFF0F172A), Color(0xFF166534)],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
+            gradient: AppColors.primaryGradient,
             borderRadius: BorderRadius.circular(18.r),
             boxShadow: [
               BoxShadow(
@@ -148,10 +144,10 @@ class HomeScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'TurfScore',
+                'Turf Score',
                 style: theme.textTheme.headlineSmall?.copyWith(
                   fontWeight: FontWeight.w800,
-                  color: const Color(0xFF0F172A),
+                  color: AppColors.brandInk,
                 ),
               ),
               SizedBox(height: 2.h),
@@ -194,13 +190,11 @@ class HomeScreen extends StatelessWidget {
             decoration: BoxDecoration(
               color: Theme.of(context).colorScheme.surface,
               borderRadius: BorderRadius.circular(16.r),
-              border: Border.all(
-                color: AppColors.primary.withValues(alpha: 0.08),
-              ),
+              border: Border.all(color: AppColors.outline),
             ),
             child: Icon(
               Icons.more_horiz_rounded,
-              color: const Color(0xFF0F172A),
+              color: AppColors.brandInk,
               size: 24.r,
             ),
           ),
@@ -504,7 +498,7 @@ class _SectionHeader extends StatelessWidget {
             onPressed: onTap,
             child: Text(
               actionLabel!,
-              style: const TextStyle(
+              style: TextStyle(
                 color: AppColors.primary,
                 fontWeight: FontWeight.w700,
               ),
@@ -572,7 +566,7 @@ class _LiveMatchCard extends StatelessWidget {
                       vertical: 6.h,
                     ),
                     decoration: BoxDecoration(
-                      color: const Color(0xFFFEE2E2),
+                      color: AppColors.liveSoft,
                       borderRadius: BorderRadius.circular(999.r),
                     ),
                     child: Row(
@@ -582,7 +576,7 @@ class _LiveMatchCard extends StatelessWidget {
                           width: 8.r,
                           height: 8.r,
                           decoration: const BoxDecoration(
-                            color: Color(0xFFDC2626),
+                            color: AppColors.live,
                             shape: BoxShape.circle,
                           ),
                         ),
@@ -590,7 +584,7 @@ class _LiveMatchCard extends StatelessWidget {
                         Text(
                           'LIVE',
                           style: TextStyle(
-                            color: const Color(0xFFB91C1C),
+                            color: AppColors.errorDeep,
                             fontSize: 11.sp,
                             fontWeight: FontWeight.w700,
                           ),
@@ -638,11 +632,7 @@ class _LiveMatchCard extends StatelessWidget {
                       vertical: 16.h,
                     ),
                     decoration: BoxDecoration(
-                      gradient: const LinearGradient(
-                        colors: [Color(0xFF0F172A), Color(0xFF166534)],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                      ),
+                      gradient: AppColors.brandHeroGradient,
                       borderRadius: BorderRadius.circular(22.r),
                     ),
                     child: Column(
@@ -697,8 +687,8 @@ class _LiveMatchCard extends StatelessWidget {
                   value: progress,
                   minHeight: 8.h,
                   backgroundColor: AppColors.accent,
-                  valueColor: const AlwaysStoppedAnimation<Color>(
-                    AppColors.primary,
+                  valueColor: AlwaysStoppedAnimation<Color>(
+                    AppColors.brandField,
                   ),
                 ),
               ),
@@ -742,14 +732,14 @@ class _TeamLine extends StatelessWidget {
           width: 40.r,
           height: 40.r,
           decoration: BoxDecoration(
-            color: const Color(0xFFEEF7F0),
+            color: AppColors.accent,
             borderRadius: BorderRadius.circular(14.r),
           ),
           alignment: Alignment.center,
           child: Text(
             code,
             style: Theme.of(context).textTheme.labelLarge?.copyWith(
-              color: const Color(0xFF166534),
+              color: AppColors.brandField,
               fontWeight: FontWeight.w800,
             ),
           ),
@@ -840,13 +830,13 @@ class _CompletedMatchCard extends StatelessWidget {
                       vertical: 6.h,
                     ),
                     decoration: BoxDecoration(
-                      color: const Color(0xFFDCFCE7),
+                      color: AppColors.successSoft,
                       borderRadius: BorderRadius.circular(999.r),
                     ),
                     child: Text(
                       'COMPLETED',
                       style: TextStyle(
-                        color: const Color(0xFF166534),
+                        color: AppColors.successDeep,
                         fontSize: 11.sp,
                         fontWeight: FontWeight.w700,
                       ),
@@ -881,13 +871,13 @@ class _CompletedMatchCard extends StatelessWidget {
                 width: double.infinity,
                 padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 12.h),
                 decoration: BoxDecoration(
-                  color: AppColors.backgroundLight,
+                  color: AppColors.surfaceMuted,
                   borderRadius: BorderRadius.circular(16.r),
                 ),
                 child: Text(
                   match.result,
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: AppColors.primaryDark,
+                    color: AppColors.brandField,
                     fontWeight: FontWeight.w700,
                   ),
                 ),
@@ -947,7 +937,7 @@ class _CompletedScoreLine extends StatelessWidget {
           score,
           style: Theme.of(context).textTheme.titleMedium?.copyWith(
             fontWeight: FontWeight.w800,
-            color: const Color(0xFF0F172A),
+            color: AppColors.brandInk,
           ),
         ),
       ],
@@ -1034,7 +1024,7 @@ class _LiveMatchSkeleton extends StatelessWidget {
                 width: 64.w,
                 height: 24.h,
                 decoration: BoxDecoration(
-                  color: const Color(0xFFFEE2E2),
+                  color: AppColors.liveSoft,
                   borderRadius: BorderRadius.circular(999.r),
                 ),
               ),
@@ -1089,7 +1079,7 @@ class _LiveMatchSkeleton extends StatelessWidget {
                 width: 112.w,
                 height: 100.h,
                 decoration: BoxDecoration(
-                  color: const Color(0xFF0F172A).withValues(alpha: 0.88),
+                  color: AppColors.brandInk.withValues(alpha: 0.9),
                   borderRadius: BorderRadius.circular(22.r),
                 ),
               ),

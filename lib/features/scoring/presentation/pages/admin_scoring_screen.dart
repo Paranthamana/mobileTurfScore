@@ -38,7 +38,7 @@ class _AdminScoringScreenState extends State<AdminScoringScreen>
   String _lastPendingBowlerKey = '';
   String _lastResultDialogKey = '';
   String? _boundaryLabel;
-  Color _boundaryColor = Colors.blue;
+  Color _boundaryColor = AppColors.info;
 
   @override
   void initState() {
@@ -249,7 +249,7 @@ class _AdminScoringScreenState extends State<AdminScoringScreen>
                   width: 8.r,
                   height: 8.r,
                   decoration: const BoxDecoration(
-                    color: Color(0xFF4ADE80),
+                    color: AppColors.success,
                     shape: BoxShape.circle,
                   ),
                 ),
@@ -322,7 +322,7 @@ class _AdminScoringScreenState extends State<AdminScoringScreen>
                   theme: theme,
                   title: 'Req RR',
                   value: target > 0 ? requiredRunRate : '-',
-                  tint: const Color(0xFF0F766E).withValues(alpha: 0.08),
+                  tint: AppColors.infoSoft,
                 ),
               ),
               SizedBox(width: 8.w),
@@ -398,8 +398,8 @@ class _AdminScoringScreenState extends State<AdminScoringScreen>
                   theme: theme,
                   label: 'Extras',
                   value: '$extrasTotal',
-                  tint: Colors.orange.withValues(alpha: 0.10),
-                  textColor: Colors.orange.shade800,
+                  tint: AppColors.goldSoft,
+                  textColor: AppColors.goldDeep,
                 ),
               ),
               SizedBox(width: 6.w),
@@ -408,8 +408,8 @@ class _AdminScoringScreenState extends State<AdminScoringScreen>
                   theme: theme,
                   label: 'Wd',
                   value: '$wideRuns',
-                  tint: Colors.amber.withValues(alpha: 0.12),
-                  textColor: Colors.amber.shade900,
+                  tint: AppColors.warningSoft,
+                  textColor: AppColors.warningDeep,
                 ),
               ),
               SizedBox(width: 6.w),
@@ -418,8 +418,8 @@ class _AdminScoringScreenState extends State<AdminScoringScreen>
                   theme: theme,
                   label: 'Nb',
                   value: '$noBallRuns',
-                  tint: Colors.red.withValues(alpha: 0.10),
-                  textColor: Colors.red.shade700,
+                  tint: AppColors.errorSoft,
+                  textColor: AppColors.errorDeep,
                 ),
               ),
               SizedBox(width: 6.w),
@@ -428,8 +428,8 @@ class _AdminScoringScreenState extends State<AdminScoringScreen>
                   theme: theme,
                   label: 'B',
                   value: '$byeRuns',
-                  tint: Colors.blue.withValues(alpha: 0.10),
-                  textColor: Colors.blue.shade700,
+                  tint: AppColors.infoSoft,
+                  textColor: AppColors.infoDeep,
                 ),
               ),
               SizedBox(width: 6.w),
@@ -438,8 +438,8 @@ class _AdminScoringScreenState extends State<AdminScoringScreen>
                   theme: theme,
                   label: 'Lb',
                   value: '$legByeRuns',
-                  tint: Colors.teal.withValues(alpha: 0.10),
-                  textColor: Colors.teal.shade700,
+                  tint: AppColors.purpleSoft,
+                  textColor: AppColors.purple,
                 ),
               ),
             ],
@@ -715,7 +715,7 @@ class _AdminScoringScreenState extends State<AdminScoringScreen>
               ),
               if (isStriker) ...[
                 SizedBox(width: 4.w),
-                const Icon(Icons.star, color: AppColors.primary, size: 14),
+                Icon(Icons.star, color: AppColors.primary, size: 14),
               ],
             ],
           ),
@@ -788,7 +788,7 @@ class _AdminScoringScreenState extends State<AdminScoringScreen>
                     final normalizedValue = value.trim();
                     final isCompactCircle = normalizedValue.length <= 2;
 
-                    Color bgColor = Colors.grey.withValues(alpha: 0.1);
+                    Color bgColor = AppColors.surfaceMuted;
                     Color textColor = AppColors.textLight;
 
                     if (isWicket) {
@@ -873,7 +873,7 @@ class _AdminScoringScreenState extends State<AdminScoringScreen>
               child: _buildActionButton(
                 Icons.undo,
                 'Undo',
-                Colors.orange,
+                AppColors.goldDeep,
                 enabled: !isLoadingBusy,
                 onTap: _undoLastBall,
               ),
@@ -883,7 +883,7 @@ class _AdminScoringScreenState extends State<AdminScoringScreen>
               child: _buildActionButton(
                 Icons.swap_horiz,
                 'Swap',
-                Colors.blue,
+                AppColors.info,
                 enabled: !isLoadingBusy,
               ),
             ),
@@ -892,7 +892,7 @@ class _AdminScoringScreenState extends State<AdminScoringScreen>
               child: _buildActionButton(
                 Icons.person_add,
                 'Batsman',
-                Colors.purple,
+                AppColors.purple,
                 enabled: awaitingNewBatsman && !isLoadingBusy,
                 onTap: _showNewBatsmanBottomSheet,
               ),
@@ -902,7 +902,7 @@ class _AdminScoringScreenState extends State<AdminScoringScreen>
               child: _buildActionButton(
                 Icons.sports_baseball,
                 'Bowler',
-                Colors.teal,
+                AppColors.brandField,
                 enabled: awaitingNewBowler && !isLoadingBusy,
                 onTap: _showNewBowlerBottomSheet,
               ),
@@ -1041,8 +1041,7 @@ class _AdminScoringScreenState extends State<AdminScoringScreen>
     }
     final currentState = _scoringBloc.state;
     final currentData = _matchDataFromState(currentState);
-    final matchCompleted =
-        (currentData['matchCompleted'] as bool?) ?? false;
+    final matchCompleted = (currentData['matchCompleted'] as bool?) ?? false;
     final awaitingNewBatsman =
         (currentData['awaitingNewBatsman'] as bool?) ?? false;
     final awaitingNewBowler =
@@ -1145,7 +1144,9 @@ class _AdminScoringScreenState extends State<AdminScoringScreen>
     final awaitingNewBatsman =
         (currentData['awaitingNewBatsman'] as bool?) ?? false;
 
-    if (!isActionableScoringState || !awaitingNewBatsman || _isBatsmanSheetOpen) {
+    if (!isActionableScoringState ||
+        !awaitingNewBatsman ||
+        _isBatsmanSheetOpen) {
       return;
     }
 
@@ -1219,9 +1220,7 @@ class _AdminScoringScreenState extends State<AdminScoringScreen>
                             return;
                           }
 
-                          Navigator.of(
-                            bottomSheetContext,
-                          ).pop(value);
+                          Navigator.of(bottomSheetContext).pop(value);
                         },
                         child: const Text('Update Batsman'),
                       ),
@@ -1242,10 +1241,7 @@ class _AdminScoringScreenState extends State<AdminScoringScreen>
     }
 
     _scoringBloc.add(
-      NewBatsmanSubmitted(
-        matchId: widget.matchId,
-        playerName: playerName,
-      ),
+      NewBatsmanSubmitted(matchId: widget.matchId, playerName: playerName),
     );
   }
 
@@ -1353,10 +1349,7 @@ class _AdminScoringScreenState extends State<AdminScoringScreen>
     }
 
     _scoringBloc.add(
-      NewBowlerSubmitted(
-        matchId: widget.matchId,
-        playerName: playerName,
-      ),
+      NewBowlerSubmitted(matchId: widget.matchId, playerName: playerName),
     );
   }
 
@@ -1365,8 +1358,7 @@ class _AdminScoringScreenState extends State<AdminScoringScreen>
     _boundaryAnimationController.reset();
     setState(() {
       _boundaryLabel = run == '4' ? 'FOUR' : 'SIX';
-      _boundaryColor =
-          run == '4' ? const Color(0xFF2563EB) : const Color(0xFFF97316);
+      _boundaryColor = run == '4' ? AppColors.infoDeep : AppColors.goldDeep;
     });
     _boundaryAnimationController.forward();
   }
@@ -1497,9 +1489,7 @@ class _AdminScoringScreenState extends State<AdminScoringScreen>
           padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 10.h),
           decoration: BoxDecoration(
             color: Theme.of(context).colorScheme.surface,
-            border: Border(
-              top: BorderSide(color: Colors.black12),
-            ),
+            border: Border(top: BorderSide(color: AppColors.outline)),
             boxShadow: const [
               BoxShadow(
                 color: Colors.black12,
@@ -1538,11 +1528,15 @@ class _AdminScoringScreenState extends State<AdminScoringScreen>
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    _buildRunButton('4', color: Colors.blue, enabled: !isBusy),
+                    _buildRunButton(
+                      '4',
+                      color: AppColors.info,
+                      enabled: !isBusy,
+                    ),
                     _buildRunButton('5', enabled: !isBusy),
                     _buildRunButton(
                       '6',
-                      color: Colors.deepPurple,
+                      color: AppColors.goldDeep,
                       enabled: !isBusy,
                     ),
                     _buildExtraButton(
@@ -1687,7 +1681,7 @@ class _AdminScoringScreenState extends State<AdminScoringScreen>
   Widget _buildKeyboardShimmer() {
     return Shimmer.fromColors(
       baseColor: Colors.grey.shade300,
-      highlightColor: Colors.grey.shade100,
+      highlightColor: AppColors.surfaceLight,
       child: Container(
         width: double.infinity,
         height: 12.h,
@@ -1709,8 +1703,7 @@ class _AdminScoringScreenState extends State<AdminScoringScreen>
     }
 
     final currentData = _matchDataFromState(state);
-    final matchCompleted =
-        (currentData['matchCompleted'] as bool?) ?? false;
+    final matchCompleted = (currentData['matchCompleted'] as bool?) ?? false;
     if (matchCompleted) {
       _lastPendingBatsmanKey = '';
       _lastPendingBowlerKey = '';
@@ -1729,8 +1722,7 @@ class _AdminScoringScreenState extends State<AdminScoringScreen>
         awaitingNewBatsman
             ? '$inningsNumber:$overs:$strikerId:$nonStrikerId'
             : '';
-    final bowlerPendingKey =
-        awaitingNewBowler ? '$inningsNumber:$overs' : '';
+    final bowlerPendingKey = awaitingNewBowler ? '$inningsNumber:$overs' : '';
     final batsmanJustBecamePending =
         batsmanPendingKey.isNotEmpty &&
         batsmanPendingKey != _lastPendingBatsmanKey;
@@ -1821,15 +1813,15 @@ class _AdminScoringScreenState extends State<AdminScoringScreen>
   Future<void> _showMatchResultDialog(Map<String, dynamic> data) async {
     final isTie = (data['isTie'] as bool?) ?? false;
     final winnerTeamName = data['winnerTeamName']?.toString().trim() ?? '';
-    final score = '${(data['totalRuns'] as int?) ?? 0}/${(data['wickets'] as int?) ?? 0}';
+    final score =
+        '${(data['totalRuns'] as int?) ?? 0}/${(data['wickets'] as int?) ?? 0}';
     final overs = data['overs']?.toString() ?? '0.0';
     final title = isTie ? 'Match Tied' : 'Congratulations!';
     final headline =
         isTie
             ? 'What a finish. Both teams stayed level right to the end.'
             : '$winnerTeamName stole the show and sealed the win.';
-    final accentColor =
-        isTie ? const Color(0xFFEA580C) : const Color(0xFF16A34A);
+    final accentColor = isTie ? AppColors.goldDeep : AppColors.successDeep;
 
     await showDialog<void>(
       context: context,
@@ -1863,9 +1855,9 @@ class _AdminScoringScreenState extends State<AdminScoringScreen>
               Text(
                 headline,
                 textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                  height: 1.4,
-                ),
+                style: Theme.of(
+                  context,
+                ).textTheme.bodyLarge?.copyWith(height: 1.4),
               ),
               SizedBox(height: 16.h),
               Container(
@@ -1957,7 +1949,7 @@ class _AdminScoringScreenState extends State<AdminScoringScreen>
                 elevation: 0,
                 backgroundColor: Colors.transparent,
                 flexibleSpace: Container(
-                  decoration: const BoxDecoration(
+                  decoration: BoxDecoration(
                     gradient: AppColors.brandHeroGradient,
                   ),
                 ),
@@ -2066,10 +2058,7 @@ class _ResultCelebration extends StatefulWidget {
   final Color accentColor;
   final bool isTie;
 
-  const _ResultCelebration({
-    required this.accentColor,
-    required this.isTie,
-  });
+  const _ResultCelebration({required this.accentColor, required this.isTie});
 
   @override
   State<_ResultCelebration> createState() => _ResultCelebrationState();
@@ -2161,10 +2150,7 @@ class _ResultCelebrationPainter extends CustomPainter {
     final softPaint =
         Paint()
           ..shader = RadialGradient(
-            colors: [
-              accentColor.withValues(alpha: 0.16),
-              Colors.transparent,
-            ],
+            colors: [accentColor.withValues(alpha: 0.16), Colors.transparent],
           ).createShader(
             Rect.fromCircle(center: center, radius: size.width * 0.42),
           );
@@ -2191,13 +2177,7 @@ class _ResultCelebrationPainter extends CustomPainter {
       baseY,
       Color.lerp(accentColor, Colors.orange, 0.3) ?? accentColor,
     );
-    _drawFountain(
-      canvas,
-      size,
-      progress,
-      baseY,
-      accentColor,
-    );
+    _drawFountain(canvas, size, progress, baseY, accentColor);
     if (!isTie) {
       _drawConfetti(canvas, size);
     }
@@ -2244,12 +2224,7 @@ class _ResultCelebrationPainter extends CustomPainter {
     }
   }
 
-  void _drawFlowerPot(
-    Canvas canvas,
-    Size size,
-    double baseY,
-    Color color,
-  ) {
+  void _drawFlowerPot(Canvas canvas, Size size, double baseY, Color color) {
     final potPath =
         Path()
           ..moveTo(size.width * 0.43, baseY - 8)
@@ -2268,12 +2243,7 @@ class _ResultCelebrationPainter extends CustomPainter {
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
           ).createShader(
-            Rect.fromLTWH(
-              size.width * 0.43,
-              baseY - 8,
-              size.width * 0.14,
-              30,
-            ),
+            Rect.fromLTWH(size.width * 0.43, baseY - 8, size.width * 0.14, 30),
           );
     canvas.drawPath(potPath, potPaint);
     canvas.drawRRect(
@@ -2307,9 +2277,11 @@ class _ResultCelebrationPainter extends CustomPainter {
       final y = plumeBase.dy - (height * math.sin(t * math.pi));
       final radius = 1.8 + ((1 - t) * 2.8);
       sparkPaint.color =
-          Color.lerp(Colors.amberAccent, color, t * 0.7)?.withValues(
-            alpha: 0.85 - (t * 0.28),
-          ) ??
+          Color.lerp(
+            Colors.amberAccent,
+            color,
+            t * 0.7,
+          )?.withValues(alpha: 0.85 - (t * 0.28)) ??
           color;
       canvas.drawCircle(Offset(x, y), radius, sparkPaint);
     }
@@ -2335,7 +2307,11 @@ class _ResultCelebrationPainter extends CustomPainter {
       canvas.rotate((t * 2.6) + (i * 0.4));
       canvas.drawRRect(
         RRect.fromRectAndRadius(
-          Rect.fromCenter(center: Offset.zero, width: rect.width, height: rect.height),
+          Rect.fromCenter(
+            center: Offset.zero,
+            width: rect.width,
+            height: rect.height,
+          ),
           const Radius.circular(2),
         ),
         Paint()..color = confettiColor.withValues(alpha: 0.78),

@@ -3,11 +3,11 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../core/theme/colors.dart';
-import '../../../../core/widgets/brand_backdrop.dart';
 import '../../../../injection_container.dart';
 import '../bloc/auth_bloc.dart';
 import '../bloc/auth_event.dart';
 import '../bloc/auth_state.dart';
+import '../widgets/auth_card_shell.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -40,11 +40,8 @@ class _LoginScreenState extends State<LoginScreen> {
     messenger.hideCurrentSnackBar();
 
     final (icon, accent) = switch (type) {
-      _ToastType.success => (
-        Icons.check_circle_rounded,
-        const Color(0xFF2EE59D),
-      ),
-      _ToastType.error => (Icons.error_rounded, const Color(0xFFFF4D4D)),
+      _ToastType.success => (Icons.check_circle_rounded, AppColors.success),
+      _ToastType.error => (Icons.error_rounded, AppColors.error),
       _ToastType.info => (Icons.info_rounded, AppColors.primary),
     };
 
@@ -130,10 +127,44 @@ class _LoginScreenState extends State<LoginScreen> {
     return null;
   }
 
-  @override
-  Widget build(BuildContext context) {
+  InputDecoration _fieldDecoration(
+    BuildContext context, {
+    required String hintText,
+    required IconData prefixIcon,
+    Widget? suffixIcon,
+  }) {
     final theme = Theme.of(context);
 
+    return InputDecoration(
+      hintText: hintText,
+      hintStyle: theme.textTheme.bodyMedium?.copyWith(
+        color: AppColors.textSecondaryLight.withValues(alpha: 0.92),
+        fontWeight: FontWeight.w600,
+      ),
+      prefixIcon: Icon(prefixIcon, size: 20.r),
+      prefixIconColor: AppColors.brandField,
+      suffixIcon: suffixIcon,
+      suffixIconColor: AppColors.textSecondaryLight,
+      filled: true,
+      fillColor: theme.colorScheme.surface,
+      contentPadding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 17.h),
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(16.r),
+        borderSide: BorderSide.none,
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(16.r),
+        borderSide: BorderSide(color: AppColors.outline),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(16.r),
+        borderSide: BorderSide(color: AppColors.brandField, width: 1.6),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => sl<AuthBloc>(),
       child: BlocListener<AuthBloc, AuthState>(
@@ -148,354 +179,282 @@ class _LoginScreenState extends State<LoginScreen> {
             );
           }
         },
-        child: Scaffold(
-          backgroundColor: AppColors.backgroundLight,
-          body: Stack(
-            fit: StackFit.expand,
-            children: [
-              const BrandBackdrop(),
-              SafeArea(
-                child: Center(
-                  child: SingleChildScrollView(
-                    padding: EdgeInsets.fromLTRB(20.w, 24.h, 20.w, 28.h),
-                    child: Container(
-                      constraints: BoxConstraints(maxWidth: 430.w),
-                      child: Column(
-                        children: [
-                          Container(
-                            width: double.infinity,
-                            padding: EdgeInsets.fromLTRB(28.w, 28.h, 28.w, 118.h),
-                            decoration: BoxDecoration(
-                              gradient: AppColors.brandHeroGradient,
-                              borderRadius: BorderRadius.circular(36.r),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: AppColors.brandInk.withValues(alpha: 0.16),
-                                  blurRadius: 28,
-                                  offset: const Offset(0, 18),
-                                ),
-                              ],
-                            ),
-                            child: Column(
-                              children: [
-                                Container(
-                                  width: 48.r,
-                                  height: 48.r,
-                                  decoration: BoxDecoration(
-                                    color: Colors.white.withValues(alpha: 0.16),
-                                    borderRadius: BorderRadius.circular(16.r),
-                                    border: Border.all(
-                                      color: Colors.white.withValues(alpha: 0.2),
-                                    ),
-                                  ),
-                                  child: Icon(
-                                    Icons.shield_rounded,
-                                    color: Colors.white,
-                                    size: 24.r,
-                                  ),
-                                ).animate().scale(duration: 420.ms).fadeIn(),
-                                SizedBox(height: 20.h),
-                                Text(
-                                      'Sign in to your\naccount',
-                                      textAlign: TextAlign.center,
-                                      style: theme.textTheme.headlineLarge?.copyWith(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.w800,
-                                        height: 1.12,
-                                      ),
-                                    )
-                                    .animate()
-                                    .fadeIn(delay: 180.ms)
-                                    .slideY(begin: 0.08, end: 0),
-                                SizedBox(height: 12.h),
-                                Text(
-                                      'Enter your email and password to log in and continue live scoring.',
-                                      textAlign: TextAlign.center,
-                                      style: theme.textTheme.bodyMedium?.copyWith(
-                                        color: Colors.white.withValues(alpha: 0.82),
-                                        height: 1.45,
-                                      ),
-                                    )
-                                    .animate()
-                                    .fadeIn(delay: 260.ms)
-                                    .slideY(begin: 0.08, end: 0),
-                              ],
-                            ),
-                          ),
-                          Transform.translate(
-                            offset: Offset(0, -86.h),
-                            child: Container(
-                              width: double.infinity,
-                              padding: EdgeInsets.all(22.w),
-                              decoration: BoxDecoration(
-                                color: theme.colorScheme.surface,
-                                borderRadius: BorderRadius.circular(30.r),
-                                border: Border.all(
-                                  color: AppColors.brandField.withValues(alpha: 0.08),
-                                ),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: AppColors.brandInk.withValues(alpha: 0.08),
-                                    blurRadius: 30,
-                                    offset: const Offset(0, 16),
-                                  ),
-                                ],
-                              ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.stretch,
-                                children: [
-                                  TextFormField(
-                                        controller: _emailController,
-                                        decoration: InputDecoration(
-                                          hintText: 'Enter your email',
-                                          prefixIcon: const Icon(Icons.mail_outline_rounded),
-                                          filled: true,
-                                          fillColor: AppColors.backgroundLight,
-                                          border: OutlineInputBorder(
-                                            borderRadius: BorderRadius.circular(16.r),
-                                            borderSide: BorderSide.none,
-                                          ),
-                                          enabledBorder: OutlineInputBorder(
-                                            borderRadius: BorderRadius.circular(16.r),
-                                            borderSide: BorderSide(
-                                              color: AppColors.brandInk.withValues(alpha: 0.06),
-                                            ),
-                                          ),
-                                          focusedBorder: OutlineInputBorder(
-                                            borderRadius: BorderRadius.circular(16.r),
-                                            borderSide: const BorderSide(
-                                              color: AppColors.brandField,
-                                              width: 1.4,
-                                            ),
-                                          ),
-                                        ),
-                                        keyboardType: TextInputType.emailAddress,
-                                        textInputAction: TextInputAction.next,
-                                      )
-                                      .animate()
-                                      .fadeIn(delay: 340.ms)
-                                      .slideX(begin: -0.08, end: 0),
-                                  SizedBox(height: 14.h),
-                                  ValueListenableBuilder<bool>(
-                                        valueListenable: _obscurePassword,
-                                        builder: (context, obscure, _) {
-                                          return TextFormField(
-                                            controller: _passwordController,
-                                            obscureText: obscure,
-                                            decoration: InputDecoration(
-                                              hintText: 'Enter your password',
-                                              prefixIcon: const Icon(Icons.lock_outline_rounded),
-                                              filled: true,
-                                              fillColor: AppColors.backgroundLight,
-                                              border: OutlineInputBorder(
-                                                borderRadius: BorderRadius.circular(16.r),
-                                                borderSide: BorderSide.none,
-                                              ),
-                                              enabledBorder: OutlineInputBorder(
-                                                borderRadius: BorderRadius.circular(16.r),
-                                                borderSide: BorderSide(
-                                                  color: AppColors.brandInk.withValues(alpha: 0.06),
-                                                ),
-                                              ),
-                                              focusedBorder: OutlineInputBorder(
-                                                borderRadius: BorderRadius.circular(16.r),
-                                                borderSide: const BorderSide(
-                                                  color: AppColors.brandField,
-                                                  width: 1.4,
-                                                ),
-                                              ),
-                                              suffixIcon: IconButton(
-                                                icon: Icon(
-                                                  obscure
-                                                      ? Icons.visibility_off_outlined
-                                                      : Icons.visibility_outlined,
-                                                ),
-                                                onPressed:
-                                                    () => _obscurePassword.value = !obscure,
-                                              ),
-                                            ),
-                                            textInputAction: TextInputAction.done,
-                                          );
-                                        },
-                                      )
-                                      .animate()
-                                      .fadeIn(delay: 420.ms)
-                                      .slideX(begin: -0.08, end: 0),
-                                  SizedBox(height: 14.h),
-                                  Row(
-                                    children: [
-                                      Expanded(
-                                        child: ValueListenableBuilder<bool>(
-                                          valueListenable: _rememberMe,
-                                          builder: (context, rememberMe, _) {
-                                            return InkWell(
-                                              borderRadius: BorderRadius.circular(12.r),
-                                              onTap: () => _rememberMe.value = !rememberMe,
-                                              child: Padding(
-                                                padding: EdgeInsets.symmetric(vertical: 4.h),
-                                                child: Row(
-                                                  children: [
-                                                    Checkbox(
-                                                      value: rememberMe,
-                                                      activeColor: AppColors.brandField,
-                                                      visualDensity: VisualDensity.compact,
-                                                      onChanged:
-                                                          (value) =>
-                                                              _rememberMe.value = value ?? false,
-                                                    ),
-                                                    Expanded(
-                                                      child: Text(
-                                                        'Remember me',
-                                                        style: theme.textTheme.bodySmall?.copyWith(
-                                                          color: AppColors.textSecondaryLight,
-                                                          fontWeight: FontWeight.w600,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            );
-                                          },
-                                        ),
-                                      ),
-                                      TextButton(
-                                        onPressed: () {},
-                                        child: const Text(
-                                          'Forgot Password?',
-                                          style: TextStyle(
-                                            color: AppColors.brandField,
-                                            fontWeight: FontWeight.w700,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ).animate().fadeIn(delay: 500.ms),
-                                  SizedBox(height: 12.h),
-                                  BlocBuilder<AuthBloc, AuthState>(
-                                        builder: (context, state) {
-                                          final isLoading = state is AuthLoading;
-                                          return ElevatedButton(
-                                            onPressed:
-                                                isLoading
-                                                    ? null
-                                                    : () {
-                                                      final emailError = _validateEmail(
-                                                        _emailController.text,
-                                                      );
-                                                      if (emailError != null) {
-                                                        _showAppToast(
-                                                          context,
-                                                          message: emailError,
-                                                          type: _ToastType.error,
-                                                        );
-                                                        return;
-                                                      }
+        child: Builder(
+          builder: (context) {
+            final theme = Theme.of(context);
 
-                                                      final passwordError = _validatePassword(
-                                                        _passwordController.text,
-                                                      );
-                                                      if (passwordError != null) {
-                                                        _showAppToast(
-                                                          context,
-                                                          message: passwordError,
-                                                          type: _ToastType.error,
-                                                        );
-                                                        return;
-                                                      }
-
-                                                      context.read<AuthBloc>().add(
-                                                        AuthLoginSubmitted(
-                                                          email: _emailController.text.trim(),
-                                                          password: _passwordController.text,
-                                                        ),
-                                                      );
-                                                    },
-                                            style: ElevatedButton.styleFrom(
-                                              backgroundColor: AppColors.brandField,
-                                              foregroundColor: Colors.white,
-                                              elevation: 0,
-                                              padding: EdgeInsets.symmetric(vertical: 17.h),
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius: BorderRadius.circular(16.r),
-                                              ),
-                                            ),
-                                            child:
-                                                isLoading
-                                                    ? SizedBox(
-                                                      width: 20.r,
-                                                      height: 20.r,
-                                                      child: const CircularProgressIndicator(
-                                                        strokeWidth: 2,
-                                                        color: Colors.white,
-                                                      ),
-                                                    )
-                                                    : const Text('Log In'),
-                                          );
-                                        },
-                                      )
-                                      .animate()
-                                      .fadeIn(delay: 580.ms)
-                                      .scale(begin: const Offset(0.96, 0.96)),
-                                  SizedBox(height: 14.h),
-                                  OutlinedButton(
-                                    onPressed: () {
-                                      Navigator.pushReplacementNamed(
-                                        context,
-                                        '/dashboard',
-                                      );
-                                    },
-                                    style: OutlinedButton.styleFrom(
-                                      padding: EdgeInsets.symmetric(vertical: 15.h),
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(16.r),
-                                      ),
-                                      side: BorderSide(
-                                        color: AppColors.brandInk.withValues(alpha: 0.14),
-                                      ),
-                                      foregroundColor: AppColors.brandInk,
-                                    ),
-                                    child: const Text(
-                                      'Login as Guest',
-                                      style: TextStyle(fontWeight: FontWeight.w700),
-                                    ),
-                                  ).animate().fadeIn(delay: 660.ms),
-                                  SizedBox(height: 18.h),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        "Don't have an account? ",
-                                        style: theme.textTheme.bodyMedium?.copyWith(
-                                          color: AppColors.textSecondaryLight,
-                                        ),
-                                      ),
-                                      TextButton(
-                                        onPressed:
-                                            () => Navigator.pushNamed(context, '/signup'),
-                                        child: const Text(
-                                          'Sign Up',
-                                          style: TextStyle(
-                                            color: AppColors.brandField,
-                                            fontWeight: FontWeight.w700,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ).animate().fadeIn(delay: 740.ms),
-                                ],
-                              ),
-                            ),
-                          ),
-                          SizedBox(height: 10.h),
-                        ],
+            return AuthCardShell(
+              heroIcon: Icons.shield_rounded,
+              heroBadge: 'LOGIN',
+              title: 'Welcome back',
+              subtitle: 'Sign in to continue.',
+              panelTitle: 'Sign in',
+              panelSubtitle:
+                  'Use your email and password to access your account.',
+              footerChild: Wrap(
+                alignment: WrapAlignment.center,
+                crossAxisAlignment: WrapCrossAlignment.center,
+                spacing: 2.w,
+                children: [
+                  Text(
+                    "Don't have an account?",
+                    style: theme.textTheme.bodyMedium?.copyWith(
+                      color: AppColors.textSecondaryLight,
+                    ),
+                  ),
+                  TextButton(
+                    onPressed: () => Navigator.pushNamed(context, '/signup'),
+                    style: TextButton.styleFrom(
+                      minimumSize: Size.zero,
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 6.w,
+                        vertical: 8.h,
+                      ),
+                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    ),
+                    child: Text(
+                      'Sign Up',
+                      style: TextStyle(
+                        color: AppColors.primary,
+                        fontWeight: FontWeight.w700,
                       ),
                     ),
                   ),
-                ),
+                ],
               ),
-            ],
-          ),
+              formChild: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  TextFormField(
+                        controller: _emailController,
+                        style: theme.textTheme.bodyLarge?.copyWith(
+                          color: AppColors.textLight,
+                          fontWeight: FontWeight.w600,
+                        ),
+                        cursorColor: AppColors.brandField,
+                        decoration: _fieldDecoration(
+                          context,
+                          hintText: 'Enter your email',
+                          prefixIcon: Icons.mail_outline_rounded,
+                        ),
+                        keyboardType: TextInputType.emailAddress,
+                        textInputAction: TextInputAction.next,
+                      )
+                      .animate()
+                      .fadeIn(delay: 340.ms)
+                      .slideX(begin: -0.08, end: 0),
+                  SizedBox(height: 14.h),
+                  ValueListenableBuilder<bool>(
+                        valueListenable: _obscurePassword,
+                        builder: (context, obscure, _) {
+                          return TextFormField(
+                            controller: _passwordController,
+                            obscureText: obscure,
+                            style: theme.textTheme.bodyLarge?.copyWith(
+                              color: AppColors.textLight,
+                              fontWeight: FontWeight.w600,
+                            ),
+                            cursorColor: AppColors.brandField,
+                            decoration: _fieldDecoration(
+                              context,
+                              hintText: 'Enter your password',
+                              prefixIcon: Icons.lock_outline_rounded,
+                              suffixIcon: IconButton(
+                                icon: Icon(
+                                  obscure
+                                      ? Icons.visibility_off_outlined
+                                      : Icons.visibility_outlined,
+                                ),
+                                onPressed:
+                                    () => _obscurePassword.value = !obscure,
+                              ),
+                            ),
+                            textInputAction: TextInputAction.done,
+                          );
+                        },
+                      )
+                      .animate()
+                      .fadeIn(delay: 420.ms)
+                      .slideX(begin: -0.08, end: 0),
+                  SizedBox(height: 14.h),
+                  LayoutBuilder(
+                    builder: (context, constraints) {
+                      final stackActions = constraints.maxWidth < 360.w;
+                      final rememberMeToggle = ValueListenableBuilder<bool>(
+                        valueListenable: _rememberMe,
+                        builder: (context, rememberMe, _) {
+                          return InkWell(
+                            borderRadius: BorderRadius.circular(12.r),
+                            onTap: () => _rememberMe.value = !rememberMe,
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(vertical: 4.h),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Checkbox(
+                                    value: rememberMe,
+                                    activeColor: AppColors.brandField,
+                                    checkColor: Colors.white,
+                                    visualDensity: VisualDensity.compact,
+                                    onChanged:
+                                        (value) =>
+                                            _rememberMe.value = value ?? false,
+                                  ),
+                                  Flexible(
+                                    child: Text(
+                                      'Remember me',
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: theme.textTheme.bodySmall
+                                          ?.copyWith(
+                                            color: AppColors.textSecondaryLight,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        },
+                      );
+
+                      final forgotPasswordButton = TextButton(
+                        onPressed: () {},
+                        style: TextButton.styleFrom(
+                          minimumSize: Size.zero,
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 6.w,
+                            vertical: 8.h,
+                          ),
+                          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                        ),
+                        child: Text(
+                          'Forgot Password?',
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            color: AppColors.brandField,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      );
+
+                      if (stackActions) {
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            rememberMeToggle,
+                            Align(
+                              alignment: Alignment.centerRight,
+                              child: forgotPasswordButton,
+                            ),
+                          ],
+                        );
+                      }
+
+                      return Row(
+                        children: [
+                          Expanded(child: rememberMeToggle),
+                          SizedBox(width: 8.w),
+                          Flexible(
+                            child: Align(
+                              alignment: Alignment.centerRight,
+                              child: forgotPasswordButton,
+                            ),
+                          ),
+                        ],
+                      );
+                    },
+                  ).animate().fadeIn(delay: 500.ms),
+                  SizedBox(height: 12.h),
+                  BlocBuilder<AuthBloc, AuthState>(
+                        builder: (context, state) {
+                          final isLoading = state is AuthLoading;
+                          return ElevatedButton(
+                            onPressed:
+                                isLoading
+                                    ? null
+                                    : () {
+                                      final emailError = _validateEmail(
+                                        _emailController.text,
+                                      );
+                                      if (emailError != null) {
+                                        _showAppToast(
+                                          context,
+                                          message: emailError,
+                                          type: _ToastType.error,
+                                        );
+                                        return;
+                                      }
+
+                                      final passwordError = _validatePassword(
+                                        _passwordController.text,
+                                      );
+                                      if (passwordError != null) {
+                                        _showAppToast(
+                                          context,
+                                          message: passwordError,
+                                          type: _ToastType.error,
+                                        );
+                                        return;
+                                      }
+
+                                      context.read<AuthBloc>().add(
+                                        AuthLoginSubmitted(
+                                          email: _emailController.text.trim(),
+                                          password: _passwordController.text,
+                                        ),
+                                      );
+                                    },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: AppColors.brandField,
+                              foregroundColor: Colors.white,
+                              elevation: 0,
+                              padding: EdgeInsets.symmetric(vertical: 17.h),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(16.r),
+                              ),
+                            ),
+                            child:
+                                isLoading
+                                    ? SizedBox(
+                                      width: 20.r,
+                                      height: 20.r,
+                                      child: const CircularProgressIndicator(
+                                        strokeWidth: 2,
+                                        color: Colors.white,
+                                      ),
+                                    )
+                                    : const Text('Log In'),
+                          );
+                        },
+                      )
+                      .animate()
+                      .fadeIn(delay: 580.ms)
+                      .scale(begin: const Offset(0.96, 0.96)),
+                  SizedBox(height: 14.h),
+                  OutlinedButton(
+                    onPressed: () {
+                      Navigator.pushReplacementNamed(context, '/dashboard');
+                    },
+                    style: OutlinedButton.styleFrom(
+                      padding: EdgeInsets.symmetric(vertical: 15.h),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16.r),
+                      ),
+                      side: BorderSide(color: AppColors.outline),
+                      foregroundColor: AppColors.brandInk,
+                    ),
+                    child: const Text(
+                      'Login as Guest',
+                      style: TextStyle(fontWeight: FontWeight.w700),
+                    ),
+                  ).animate().fadeIn(delay: 660.ms),
+                ],
+              ),
+            );
+          },
         ),
       ),
     );

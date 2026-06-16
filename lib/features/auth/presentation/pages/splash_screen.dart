@@ -58,7 +58,7 @@ class _SplashScreenState extends State<SplashScreen> {
           }
         },
         child: Scaffold(
-          backgroundColor: AppColors.backgroundLight,
+          backgroundColor: theme.scaffoldBackgroundColor,
           body: Stack(
             fit: StackFit.expand,
             children: [
@@ -191,8 +191,40 @@ class _SplashScreenState extends State<SplashScreen> {
                                   ),
                                 ),
                                 SizedBox(height: 16.h),
+                                Container(
+                                      padding: EdgeInsets.symmetric(
+                                        horizontal: 14.w,
+                                        vertical: 8.h,
+                                      ),
+                                      decoration: BoxDecoration(
+                                        color: Colors.white.withValues(
+                                          alpha: 0.74,
+                                        ),
+                                        borderRadius: BorderRadius.circular(
+                                          999.r,
+                                        ),
+                                        border: Border.all(
+                                          color: Colors.white.withValues(
+                                            alpha: 0.55,
+                                          ),
+                                        ),
+                                      ),
+                                      child: Text(
+                                        'MATCHDAY CONTROL CENTER',
+                                        style: theme.textTheme.labelSmall
+                                            ?.copyWith(
+                                              color: AppColors.brandField,
+                                              fontWeight: FontWeight.w900,
+                                              letterSpacing: 1.4,
+                                            ),
+                                      ),
+                                    )
+                                    .animate()
+                                    .fadeIn(delay: 260.ms, duration: 520.ms)
+                                    .slideY(begin: 0.12, end: 0),
+                                SizedBox(height: 16.h),
                                 Text(
-                                      'TurfScore',
+                                      'Turf Score',
                                       style: theme.textTheme.displaySmall
                                           ?.copyWith(
                                             color: AppColors.brandInk,
@@ -212,7 +244,7 @@ class _SplashScreenState extends State<SplashScreen> {
                                 ConstrainedBox(
                                   constraints: BoxConstraints(maxWidth: 310.w),
                                   child: Text(
-                                    'Fast live scoring, cleaner scorecards, and completed match results in one polished match-day desk.',
+                                    'Fast live scoring, clean scorecards, and a sharper tournament desk built for modern cricket organizers.',
                                     textAlign: TextAlign.center,
                                     style: theme.textTheme.bodyLarge?.copyWith(
                                       color: AppColors.textSecondaryLight,
@@ -222,6 +254,34 @@ class _SplashScreenState extends State<SplashScreen> {
                                     delay: 450.ms,
                                     duration: 520.ms,
                                   ),
+                                ),
+                                SizedBox(height: 26.h),
+                                ConstrainedBox(
+                                  constraints: BoxConstraints(maxWidth: 180.w),
+                                  child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(
+                                          999.r,
+                                        ),
+                                        child: LinearProgressIndicator(
+                                          minHeight: 6.h,
+                                          backgroundColor: AppColors.outline,
+                                          valueColor:
+                                              AlwaysStoppedAnimation<Color>(
+                                                AppColors.primary,
+                                              ),
+                                        ),
+                                      )
+                                      .animate(
+                                        onPlay:
+                                            (controller) => controller.repeat(
+                                              reverse: true,
+                                            ),
+                                      )
+                                      .fade(
+                                        begin: 0.45,
+                                        end: 1,
+                                        duration: 1200.ms,
+                                      ),
                                 ),
                               ],
                             ),
@@ -261,12 +321,12 @@ class _SplashStatChip extends StatelessWidget {
       width: 132.w,
       padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
       decoration: BoxDecoration(
-        color: Colors.white.withValues(alpha: 0.9),
+        color: Colors.white.withValues(alpha: 0.86),
         borderRadius: BorderRadius.circular(22.r),
-        border: Border.all(color: AppColors.brandField.withValues(alpha: 0.08)),
+        border: Border.all(color: AppColors.outline.withValues(alpha: 0.72)),
         boxShadow: [
           BoxShadow(
-            color: AppColors.brandInk.withValues(alpha: 0.05),
+            color: AppColors.brandInk.withValues(alpha: 0.08),
             blurRadius: 20,
             offset: const Offset(0, 10),
           ),
